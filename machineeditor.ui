@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MachineEditor</class>
+ <widget class="QMainWindow" name="MachineEditor">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1366</width>
+    <height>768</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QWidget" name="horizontalLayoutWidget">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>1361</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="blockChoiceBar">
+     <item>
+      <widget class="QPushButton" name="facingWallButton">
+       <property name="text">
+        <string>Facing Wall</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="facingPitButton">
+       <property name="text">
+        <string>Facing Pit</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="facingBlock">
+       <property name="text">
+        <string>Facing Block</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="facingCheese">
+       <property name="text">
+        <string>FacingCheese</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="notButton">
+       <property name="text">
+        <string>Not</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="ifButton">
+       <property name="text">
+        <string>if</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="endIfButton">
+       <property name="text">
+        <string>End If</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="whileButton">
+       <property name="text">
+        <string>While</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="endWhileButton">
+       <property name="text">
+        <string>End While</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="turnLeftButton">
+       <property name="text">
+        <string>Turn Left</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="turnRightButton">
+       <property name="text">
+        <string>Turn Right</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="moveForward">
+       <property name="text">
+        <string>Move Forward</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="eatCheeseButton">
+       <property name="text">
+        <string>Eat Cheese</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="getOutput">
+       <property name="text">
+        <string>Get Output</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="connectButton">
+       <property name="text">
+        <string>connectButton</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </widget>
+   <widget class="QWidget" name="horizontalLayoutWidget_3">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>60</y>
+      <width>1361</width>
+      <height>661</height>
+     </rect>
+    </property>
+    <layout class="QHBoxLayout" name="mainLayout"/>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1366</width>
+     <height>21</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
