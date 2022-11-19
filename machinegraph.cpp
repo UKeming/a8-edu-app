@@ -566,7 +566,6 @@ void MachineGraph::addBlock(ProgramBlock type, QPointF position) {
   }
   int id = blockTree.size();
   blockTree.push_back(-1);
-  qDebug() << blockTree;
   if (type == ProgramBlock::ifStatement || type == ProgramBlock::whileLoop) {
     map[id] = std::tuple<ProgramBlock, QPointF, QPoint>(
         type, position,
