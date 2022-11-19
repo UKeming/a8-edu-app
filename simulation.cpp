@@ -13,11 +13,11 @@ Simulation::Simulation(std::vector<std::vector<MapTile>> newMap, std::vector<Pro
         for(unsigned long long x = 0; x < map[y].size(); x++){
             if(map[y][x] == start){
                 robotPos = QPoint(x, y);
-                map[y][x] = tile;
+                map[y][x] = ground;
             }
             if(map[y][x] == cheese){
                 cheesePos = QPoint(x, y);
-                map[y][x] = tile;
+                map[y][x] = ground;
             }
         }
     }
@@ -30,7 +30,7 @@ void Simulation::step(){
     if(gameState == lost)
         return;
     if(currentBlock == (int)program.size()){
-        currentBlock = 0;
+        return;
     }
     tickCount++;
     switch(program[currentBlock]){
@@ -66,7 +66,7 @@ void Simulation::step(){
             //qDebug() << newPos;
 
             switch(map[newPos.y()][newPos.x()]){
-                case tile:
+                case ground:
                     qDebug() << "moving";
                     robotPos = newPos;
                     break;
@@ -78,14 +78,14 @@ void Simulation::step(){
                         return;
                     }
                     switch(map[newBoxPos.y()][newBoxPos.x()]){
-                        case tile:
+                        case ground:
                             robotPos = newPos;
                             map[newBoxPos.y()][newBoxPos.x()] = block;
-                            map[newPos.y()][newPos.x()] = tile;
+                            map[newPos.y()][newPos.x()] = ground;
                             break;
                         case pit:
                             robotPos = newPos;
-                            map[newPos.y()][newPos.x()] = tile;
+                            map[newPos.y()][newPos.x()] = ground;
                             break;
                         case block:
                             break;
@@ -206,7 +206,7 @@ void Simulation::printGameState(){
                 continue;
             }
             switch(map[y][x]){
-                case tile:
+                case ground:
                     mapString.append("*");
                     break;
                 case pit:

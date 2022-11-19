@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
 //    return a.exec();
 
 
-    Simulation sim(levels[2], std::vector<ProgramBlock>{moveForward, turnRight, moveForward, turnLeft, moveForward, moveForward, /* moveForward,*/ moveForward, turnLeft, moveForward, eatCheese, turnLeft, turnLeft, moveForward});
+    Simulation sim(levels[2], std::vector<ProgramBlock>{moveForward, turnRight, moveForward, turnLeft, moveForward, moveForward,  moveForward, moveForward, turnLeft, moveForward, eatCheese, turnLeft, turnLeft, moveForward});
     sim.printGameState();
     sim.step();
     sim.printGameState();

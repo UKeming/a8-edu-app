@@ -4,18 +4,6 @@
 #include <vector>
 #include "constants.h"
 #include <QPoint>
-enum gameState {
-    notEnded = 0,
-    won = 1,
-    lost = 2,
-};
-
-enum direction {
-    north = 0,
-    south = 1,
-    east = 2,
-    west = 3
-};
 
 class Simulation
 {
