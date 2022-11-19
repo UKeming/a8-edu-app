@@ -79,7 +79,7 @@ void MachineGraph::drawBlock(int blockID, QPainter &painter) {
   if (blockID == hoverBlock || blockID == selectedBlock) {
     lighter = true;
   }
-  if (blockID == hoverBlock && blockID == selectedBlock) {
+  if (blockID == hoverBlock && blockTree[blockID] == selectedBlock) {
     lighter = false;
   }
 
