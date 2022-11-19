@@ -12,17 +12,19 @@ public:
 private:
 
   const int GENERAL_BLOCK_SIZE_X = 90, GENERAL_BLOCK_SIZE_Y=30;
-  const int CONDITIONAL_BLOCK_SIZE_X = 180, CONDITIONAL_BLOCK_SIZE_Y=30;
-  const int INNER_BLOCK_SIZE_X = 80, INNER_BLOCK_SIZE_Y=20;
-  const int INNER_BLOCK_SIZE_SMALLER_X = 30, INNER_BLOCK_SIZE_SMALLER_Y=20;
+  const int CONDITIONAL_BLOCK_SIZE_X = 200, CONDITIONAL_BLOCK_SIZE_Y=30;
+  const int INNER_BLOCK_SIZE_X = 90, INNER_BLOCK_SIZE_Y=20;
+  const int INNER_BLOCK_SIZE_SMALLER_X = 40, INNER_BLOCK_SIZE_SMALLER_Y=20;
 
-  const QColor beginBlockColor = QColor::fromRgb(0, 150, 0);
+  const QColor beginBlockColor = QColor::fromRgb(89, 255, 160);
 
-  const QColor ifBlockColor = QColor::fromRgb(100, 100, 100);
+  const QColor ifBlockColor = QColor::fromRgb(55, 114, 255);
 
-  const QColor whileBlockColor = QColor::fromRgb(100, 100, 200);
+  const QColor whileBlockColor = QColor::fromRgb(255, 252, 49);
 
-  const QColor generalBlockColor = QColor::fromRgb(150, 150, 150);
+  const QColor generalBlockColor = QColor::fromRgb(57, 62, 65);
+
+  const QColor errorBlockColor = QColor::fromRgb(233, 79, 55);
 
   std::map<int, std::tuple<ProgramBlock, QPointF, QPoint>> map;
   std::map<int, std::tuple<ProgramBlock, ProgramBlock>> condition;
@@ -30,12 +32,16 @@ private:
   std::vector<int> blockTree;
 
   bool moving;
-  bool connect;
+  bool connecting;
   int stateCount = 1;
+
+  std::string errorMessage;
 
   int hoverBlock;
   int selectedBlock;
   ProgramBlock type;
+
+  int currentRunningBlock, errorBlock;
 
   void paintEvent(QPaintEvent *event);
 
@@ -43,7 +49,10 @@ private:
   void connectBlock(int block1, int block2);
 
   void drawBlock(int blockID, QPainter& painter);
-  void drawConnection(QPointF start, QPointF end, QPoint size,QPainter& painter);
+  void drawConnection(ProgramBlock type, QPointF start, QPointF end, QPoint size,QPainter& painter);
+  void drawTextFromMid(QPointF position, std::string text, QPainter& painter);
+
+  void setErrorMessage(int blockId, std::string message);
   int getBlock(QPointF point);
 
   bool event(QEvent *event);
@@ -54,7 +63,7 @@ private:
   const std::string getText(ProgramBlock p);
 
 public slots:
-  void setConnectState();
+  void toggleConnecting();
   void setType(ProgramBlock type);
   std::vector<ProgramBlock> getProgram();
 
@@ -62,6 +71,7 @@ public slots:
 
 
 signals:
+  void connectToggled(bool connecting);
 };
 
 #endif // MACHINEGRAPH_H

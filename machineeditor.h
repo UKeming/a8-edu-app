@@ -35,6 +35,7 @@ private slots:
     void whilePushed();
     void facingBlockButtonPushed();
     void facingCheeseButtonPushed();
+    void connectToggled(bool connecting);
 signals:
     void changeType(ProgramBlock p);
 };
