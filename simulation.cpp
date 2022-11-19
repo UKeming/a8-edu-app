@@ -134,7 +134,10 @@ void Simulation::step(){
             break;
         case eatCheese:
             currentBlock++;
-            cheesePos = QPoint(-1, -1);
+            if(cheesePos == robotPos){
+                cheesePos = QPoint(-1, -1);
+                gameState = won;
+            }
             break;
         case ifStatement:
             break;
