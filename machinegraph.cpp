@@ -219,6 +219,7 @@ void MachineGraph::drawBlock(int blockID, QPainter &painter) {
 void MachineGraph::drawConnection(ProgramBlock type, QPointF start, QPointF end,
                                   QPoint size, QPainter &painter) {
 
+  painter.setPen(Qt::black);
   float distX = qAbs(end.x() - start.x());
   float distY = qAbs(end.y() - start.y());
   int arrowSize = 5;
