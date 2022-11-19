@@ -59,7 +59,8 @@ SOURCES += \
     gamemodel.cpp \
     gamewindow.cpp \
     main.cpp \
-    levelselectwindow.cpp
+    levelselectwindow.cpp \
+    simulation.cpp
 
 HEADERS += \
     Box2D/Box2D.h \
@@ -113,7 +114,8 @@ HEADERS += \
     constants.h \
     gamemodel.h \
     gamewindow.h \
-    levelselectwindow.h
+    levelselectwindow.h \
+    simulation.h
 
 FORMS += \
     celebrationwindow.ui \

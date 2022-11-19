@@ -6,7 +6,7 @@
 
 enum MapTile {
     start = 0,
-    floor = 1,
+    tile = 1,
     wall = 2,
     cheese = 3,
     block = 4,
@@ -32,13 +32,13 @@ enum ProgramBlock {
 const std::vector<std::vector<MapTile>> levels[] = {
     // Level 1
     std::vector<std::vector<MapTile>>{
-        std::vector<MapTile>{start,  floor,  floor,  cheese}
+        std::vector<MapTile>{start,  tile,  tile,  cheese}
     },
 
     // Level 2
     std::vector<std::vector<MapTile>>{
-        std::vector<MapTile>{start, floor,  wall,   cheese},
-        std::vector<MapTile>{wall,  floor,  floor,  floor }
+        std::vector<MapTile>{start, tile,  wall,   cheese},
+        std::vector<MapTile>{wall,  tile,  tile,  tile }
     }
 };
 
