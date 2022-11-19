@@ -34,7 +34,7 @@ private:
   bool moving;
   bool connecting;
   int stateCount = 1;
-
+  QPointF pressedMousePosition, pressedBlockPosition;
   std::string errorMessage;
 
   int hoverBlock;

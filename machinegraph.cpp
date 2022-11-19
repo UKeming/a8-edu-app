@@ -381,8 +381,9 @@ bool MachineGraph::event(QEvent *event) {
 }
 void MachineGraph::mouseMoveHandler(QMouseEvent *event) {
   if (moving && selectedBlock != -1 && !connecting) {
-    QPoint size = std::get<QPoint>(map[selectedBlock]);
-    std::get<QPointF>(map[selectedBlock]) = event->position() - size / 2;
+    std::get<QPointF>(map[selectedBlock]) = event->position() -
+                                            pressedMousePosition +
+                                            pressedBlockPosition;
   }
   if (connecting) {
     int blockId = getBlock(event->position());
@@ -404,6 +405,8 @@ void MachineGraph::mouseReleaseHandler(QMouseEvent *event) {
 }
 void MachineGraph::mousePressHandler(QMouseEvent *event) {
   int blockId = getBlock(event->position());
+  pressedMousePosition = event->position();
+  pressedBlockPosition = std::get<QPointF>(map[blockId]);
   errorBlock = -1;
   if (blockId != -1) {
     selectedBlock = blockId;
