@@ -128,8 +128,8 @@ void MachineGraph::drawBlock(int blockID, QPainter &painter) {
     borderAndTextColorInner = Qt::white;
   }
 
-  QPen outerPen(borderAndTextColorOuter, 2);
-  QPen innerPen(borderAndTextColorInner, 2);
+  QPen outerPen(borderAndTextColorOuter, 1);
+  QPen innerPen(borderAndTextColorInner, 1);
 
   switch (type) {
   case ProgramBlock::whileLoop: {
