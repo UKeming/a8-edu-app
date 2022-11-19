@@ -9,6 +9,9 @@ MachineEditor::MachineEditor(QWidget *parent)
   ui->mainLayout->insertWidget(0, graph);
   connect(ui->connectButton, &QPushButton::clicked, graph,
           &MachineGraph::toggleConnecting);
+  connect(ui->resetBegin, &QPushButton::clicked, graph,
+          &MachineGraph::resetBegin);
+
   connect(graph, &MachineGraph::connectToggled, this,
           &MachineEditor::connectToggled);
 

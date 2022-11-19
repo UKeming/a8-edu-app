@@ -20,7 +20,7 @@
    <string notr="true"/>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QVBoxLayout" name="verticalLayout" stretch="1,8,0,0">
+   <layout class="QVBoxLayout" name="verticalLayout" stretch="1,8,0,0,0">
     <item>
      <layout class="QHBoxLayout" name="blockChoiceBar">
       <property name="spacing">
@@ -170,6 +170,18 @@
        <number>6</number>
       </property>
      </layout>
+    </item>
+    <item>
+     <widget class="QPushButton" name="resetBegin">
+      <property name="font">
+       <font>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Reset Begin</string>
+      </property>
+     </widget>
     </item>
     <item>
      <widget class="QPushButton" name="connectButton">

@@ -1,5 +1,6 @@
 #include "machinegraph.h"
 #include <QEvent>
+#include <QKeyEvent>
 #include <QLine>
 #include <QMouseEvent>
 #include <QPainter>
@@ -18,10 +19,12 @@ MachineGraph::MachineGraph(QWidget *parent) : QWidget{parent} {
               this->height() / 2 - GENERAL_BLOCK_SIZE_Y / 2),
       QPoint(GENERAL_BLOCK_SIZE_X, GENERAL_BLOCK_SIZE_Y));
   type = ProgramBlock::moveForward;
-  selectedBlock = -1;
+  this->setFocusPolicy(Qt::StrongFocus);
   hoverBlock = -1;
   errorBlock = -1;
   connecting = false;
+  selecting = false;
+  mousePressing = false;
   update();
 }
 
@@ -61,6 +64,13 @@ void MachineGraph::paintEvent(QPaintEvent *event) {
       currentBlock = next;
     }
   }
+
+  if (selecting) {
+    painter.fillRect(QRect(pressedMousePosition.x(), pressedMousePosition.y(),
+                           movingMousePosition.x() - pressedMousePosition.x(),
+                           movingMousePosition.y() - pressedMousePosition.y()),
+                     QColor::fromRgbF(255, 255, 255, 0.3));
+  }
 }
 
 void MachineGraph::drawBlock(int blockID, QPainter &painter) {
@@ -76,11 +86,15 @@ void MachineGraph::drawBlock(int blockID, QPainter &painter) {
   QColor blockColor;
   QColor innerBlockColor;
 
-  if (blockID == hoverBlock || blockID == selectedBlock) {
-    lighter = true;
-  }
-  if (blockID == hoverBlock && blockTree[blockID] == selectedBlock) {
-    lighter = false;
+  if (selectedBlock.size() > 0) {
+    if (blockID == hoverBlock ||
+        std::find(selectedBlock.begin(), selectedBlock.end(), blockID) !=
+            selectedBlock.end()) {
+      lighter = true;
+    }
+    if (blockID == hoverBlock && reachable(blockID, selectedBlock[0])) {
+      lighter = false;
+    }
   }
 
   if (type == ProgramBlock::begin) {
@@ -340,7 +354,7 @@ void MachineGraph::drawTextFromMid(QPointF position, std::string text,
 }
 
 void MachineGraph::connectBlock(int block1, int block2) {
-  if (blockTree[block2] != block1 && block2 != block1) {
+  if (!reachable(block2, block1)) {
     blockTree[block1] = block2;
   }
 }
@@ -373,6 +387,10 @@ bool MachineGraph::event(QEvent *event) {
     mouseMoveHandler(static_cast<QMouseEvent *>(event));
     return false;
     break;
+  case QEvent::KeyPress:
+    keyPressHandler(static_cast<QKeyEvent *>(event));
+    return false;
+    break;
   default:
     break;
   }
@@ -380,10 +398,24 @@ bool MachineGraph::event(QEvent *event) {
   return false;
 }
 void MachineGraph::mouseMoveHandler(QMouseEvent *event) {
-  if (moving && selectedBlock != -1 && !connecting) {
-    std::get<QPointF>(map[selectedBlock]) = event->position() -
-                                            pressedMousePosition +
-                                            pressedBlockPosition;
+  if (selecting) {
+    movingMousePosition = event->position();
+    // Update selected boxes.
+    selectedBlock = getBlock(pressedMousePosition, movingMousePosition);
+
+    std::vector<QPointF> newPositionList;
+    for (int blockId : selectedBlock) {
+      newPositionList.push_back(std::get<QPointF>(map[blockId]));
+    }
+
+    pressedBlockPosition = newPositionList;
+  }
+  if (moving && selectedBlock.size() > 0) {
+    for (int i = 0; i < selectedBlock.size(); i++) {
+      QPointF newPosition =
+          event->position() - pressedMousePosition + pressedBlockPosition[i];
+      std::get<QPointF>(map[selectedBlock[i]]) = newPosition;
+    }
   }
   if (connecting) {
     int blockId = getBlock(event->position());
@@ -391,28 +423,63 @@ void MachineGraph::mouseMoveHandler(QMouseEvent *event) {
   }
   update();
 }
+void MachineGraph::clearSelected() {
+  if (selectedBlock.size() > 0) {
+    selectedBlock.clear();
+  }
+  if (pressedBlockPosition.size() > 0) {
+    pressedBlockPosition.clear();
+  }
+  update();
+}
 void MachineGraph::mouseReleaseHandler(QMouseEvent *event) {
   if (connecting) {
     int blockId = getBlock(event->position());
-    if (blockTree[blockId] != selectedBlock && selectedBlock != -1) {
-      connectBlock(selectedBlock, blockId);
+    if (selectedBlock.size() > 0 && blockTree[blockId] != selectedBlock[0]) {
+      connectBlock(selectedBlock[0], blockId);
     }
+    clearSelected();
   }
+
+  for (int i = 0; i < selectedBlock.size(); i++) {
+    pressedBlockPosition[i] = std::get<QPointF>(map[selectedBlock[i]]);
+  }
+
   hoverBlock = -1;
-  selectedBlock = -1;
+  mousePressing = false;
   moving = false;
+  selecting = false;
   update();
 }
 void MachineGraph::mousePressHandler(QMouseEvent *event) {
   int blockId = getBlock(event->position());
   pressedMousePosition = event->position();
-  pressedBlockPosition = std::get<QPointF>(map[blockId]);
+  movingMousePosition = event->position();
+  mousePressing = true;
   errorBlock = -1;
-  if (blockId != -1) {
-    selectedBlock = blockId;
+
+  if (!connecting && selectedBlock.size() != 0 &&
+      std::find(selectedBlock.begin(), selectedBlock.end(), blockId) !=
+          selectedBlock.end()) {
+    moving = true;
+    return;
   }
-  moving = true;
-  update();
+
+  if (connecting) {
+    clearSelected();
+    if (blockId != -1) {
+      selectedBlock.push_back(blockId);
+    }
+  } else {
+    clearSelected();
+    if (blockId != -1) {
+      moving = true;
+      selectedBlock.push_back(blockId);
+      pressedBlockPosition.push_back(std::get<QPointF>(map[blockId]));
+    } else {
+      selecting = true;
+    }
+  }
 }
 
 void MachineGraph::mouseClickHandler(QMouseEvent *event) {
@@ -422,6 +489,15 @@ void MachineGraph::mouseClickHandler(QMouseEvent *event) {
     update();
   }
 }
+
+void MachineGraph::keyPressHandler(QKeyEvent *event) {
+  if (event->key() == Qt::Key_Delete) {
+    if (!mousePressing) {
+      removeBlocks();
+    }
+  }
+}
+
 const std::string MachineGraph::getText(ProgramBlock p) {
   switch (p) {
   case ProgramBlock::conditionFacingBlock:
@@ -457,6 +533,17 @@ const std::string MachineGraph::getText(ProgramBlock p) {
   }
 }
 
+bool MachineGraph::reachable(int id1, int id2) {
+  int current = id1;
+  while (current != -1) {
+    if (current == id2) {
+      return true;
+    }
+    current = blockTree[current];
+  }
+  return false;
+}
+
 void MachineGraph::addBlock(ProgramBlock type, QPointF position) {
   if (type == ProgramBlock::conditionFacingBlock ||
       type == ProgramBlock::conditionFacingPit ||
@@ -478,6 +565,7 @@ void MachineGraph::addBlock(ProgramBlock type, QPointF position) {
   }
   int id = blockTree.size();
   blockTree.push_back(-1);
+  qDebug() << blockTree;
   if (type == ProgramBlock::ifStatement || type == ProgramBlock::whileLoop) {
     map[id] = std::tuple<ProgramBlock, QPointF, QPoint>(
         type, position,
@@ -502,6 +590,48 @@ int MachineGraph::getBlock(QPointF point) {
 
   return -1;
 }
+
+std::vector<int> MachineGraph::getBlock(QPointF start, QPointF end) {
+  std::vector<int> blocks;
+  if (start.x() > end.x()) {
+    float temp = start.x();
+    start.setX(end.x());
+    end.setX(temp);
+  }
+  if (start.y() > end.y()) {
+    float temp = start.y();
+    start.setY(end.y());
+    end.setY(temp);
+  }
+  for (const auto &[key, value] : map) {
+    QPointF startPoint = std::get<QPointF>(map[key]);
+    QPoint size = std::get<QPoint>(map[key]);
+    if ((start.x() < startPoint.x()) && (start.y() < startPoint.y()) &&
+        (end.x() > startPoint.x() + size.x()) &&
+        (end.y() > startPoint.y() + size.y())) {
+      blocks.push_back(key);
+    }
+  }
+  return blocks;
+}
+
+void MachineGraph::removeBlocks() {
+  if (selectedBlock.size() > 0) {
+    for (int id : selectedBlock) {
+      if (id == 0)
+        continue;
+      for (int i = 0; i < blockTree.size(); i++) {
+        if (blockTree[i] == id) {
+          blockTree[i] = -1;
+        }
+      }
+      map.erase(id);
+    }
+    clearSelected();
+  }
+  update();
+}
+
 void MachineGraph::setType(ProgramBlock type) { this->type = type; }
 
 void MachineGraph::setErrorMessage(int blockId, std::string message) {
@@ -562,4 +692,11 @@ std::vector<ProgramBlock> MachineGraph::getProgram() {
   qDebug() << program;
 
   return program;
+}
+
+void MachineGraph::resetBegin() {
+  std::get<QPointF>(map[0]) =
+      QPointF(this->width() / 2 - GENERAL_BLOCK_SIZE_X / 2,
+              this->height() / 2 - GENERAL_BLOCK_SIZE_Y / 2);
+  clearSelected();
 }
