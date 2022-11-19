@@ -92,7 +92,8 @@ void MachineGraph::drawBlock(int blockID, QPainter &painter) {
             selectedBlock.end()) {
       lighter = true;
     }
-    if (blockID == hoverBlock && reachable(blockID, selectedBlock[0])) {
+    if (blockID == hoverBlock && reachable(blockID, selectedBlock[0]) &&
+        blockID != selectedBlock[0]) {
       lighter = false;
     }
   }
