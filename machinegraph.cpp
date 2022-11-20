@@ -25,6 +25,7 @@ MachineGraph::MachineGraph(QWidget *parent) : QWidget{parent} {
   connecting = false;
   selecting = false;
   mousePressing = false;
+  moving = false;
   update();
 }
 
