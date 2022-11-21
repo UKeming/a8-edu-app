@@ -14,7 +14,7 @@ int main(int argc, char *argv[])
 //    return a.exec();
 
 
-    Simulation sim(levels[2], std::vector<ProgramBlock>{moveForward, turnRight, moveForward, turnLeft, moveForward, moveForward,  moveForward, moveForward, turnLeft, moveForward, eatCheese, turnLeft, turnLeft, moveForward});
+    Simulation sim(levels[3], std::vector<ProgramBlock>{begin, whileLoop, conditionNot, conditionFacingCheese, ifStatement, blank, conditionFacingPit, turnRight, endIf, moveForward, endWhile,  moveForward, eatCheese});
     sim.printGameState();
     sim.step();
     sim.printGameState();
@@ -33,6 +33,46 @@ int main(int argc, char *argv[])
     sim.step();
     sim.printGameState();
     sim.step();
+    sim.printGameState();
+    sim.step();
+    sim.printGameState();
+    sim.step();
+    sim.printGameState();
+    sim.step();
+    sim.printGameState();
+    sim.step();
+    sim.printGameState();
+    sim.step();
+    sim.printGameState();
+    sim.step();
+    sim.printGameState();
+    sim.step();
+    sim.printGameState();
+    sim.step();
+    sim.printGameState();
+    sim.step();
+    sim.printGameState();
+    sim.step();
+    sim.printGameState();
+    sim.step();
+    sim.printGameState();
+    sim.step();
+    sim.printGameState();
+    sim.step();
+    sim.printGameState();
+    sim.step();
+    sim.printGameState();
+
+    sim.printGameState();
+    sim.step();
+    sim.printGameState();
+    sim.step();
+    sim.printGameState();
+    sim.step();
+    sim.printGameState();
+    sim.step();
+    sim.printGameState();
+
     sim.printGameState();
     sim.step();
     sim.printGameState();

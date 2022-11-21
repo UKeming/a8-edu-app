@@ -37,6 +37,7 @@ Simulation::Simulation(std::vector<std::vector<MapTile>> newMap, std::vector<Pro
         case endWhile:{
             int start = ifWhileStack.top();
             ifWhileStack.pop();
+            qDebug() << start << "," << index;
             ifWhileToEnd.insert({start, index});
             endToIfWhile.insert({index, start});
             break;
@@ -49,17 +50,21 @@ Simulation::Simulation(std::vector<std::vector<MapTile>> newMap, std::vector<Pro
 }
 
 void Simulation::step(){
-    if(gameState == lost)
+    if(gameState != notEnded)
         return;
+    tickCount++;
+    currentBlock++;
     if(currentBlock == (int)program.size()){
+        setLost();
         return;
     }
-    tickCount++;
+    qDebug() << currentBlock;
+    qDebug() << program[currentBlock];
+
     switch(program[currentBlock]){
         case begin:
             break;
         case moveForward:{
-            currentBlock++;
             QPoint newPos = getFacingPoint(1);
             QPoint newBoxPos= getFacingPoint(2);
 
@@ -105,7 +110,6 @@ void Simulation::step(){
             break;
         }
         case turnLeft:
-            currentBlock++;
             switch(robotDirection){
                 case north:
                     robotDirection = west;
@@ -122,7 +126,6 @@ void Simulation::step(){
             }
             break;
         case turnRight:
-            currentBlock++;
             switch(robotDirection){
                 case north:
                     robotDirection = east;
@@ -139,17 +142,31 @@ void Simulation::step(){
             }
             break;
         case eatCheese:
-            currentBlock++;
             if(cheesePos == robotPos){
                 cheesePos = QPoint(-1, -1);
                 gameState = won;
             }
             break;
-        case ifStatement:
+        case ifStatement:{
+                bool flag = checkCondition(program[currentBlock + 1] == conditionNot, program[currentBlock + 2]);
+                if(!flag){
+                    currentBlock = ifWhileToEnd[currentBlock];
+                } else {
+                    currentBlock += 2;
+                }
+            }
             break;
-        case whileLoop:
+        case whileLoop:{
+                bool flag = checkCondition(program[currentBlock + 1] == conditionNot, program[currentBlock + 2]);
+                if(!flag){
+                    currentBlock = ifWhileToEnd[currentBlock];
+                } else {
+                    currentBlock += 2;
+                }
+            }
             break;
         case endWhile:
+                currentBlock = ifWhileToEnd[currentBlock];
             break;
         case endIf:
             break;
@@ -194,16 +211,26 @@ bool Simulation::checkInBounds(QPoint point){
 }
 
 bool Simulation::checkCondition(bool isNot, ProgramBlock condition){
-
+    QPoint facing = getFacingPoint(1);
+    MapTile facingTile = map[facing.y()][facing.x()];
+    bool flag = false;
     switch(condition){
         case conditionFacingBlock:
+            flag = facingTile == block;
+            break;
         case conditionFacingWall:
+            flag = facingTile == wall;
+            break;
         case conditionFacingPit:
+            flag = facingTile == pit;
+            break;
         case conditionFacingCheese:
+            flag = facing == cheesePos;
+            break;
         default:
             break;
     }
-    return isNot;
+    return isNot ? !flag : flag;
 }
 void Simulation::printGameState(){
     switch(gameState){

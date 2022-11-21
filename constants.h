@@ -49,7 +49,7 @@ enum direction {
 const std::vector<std::vector<MapTile>> levels[] = {
     // Level 1
     std::vector<std::vector<MapTile>>{
-        std::vector<MapTile>{start,  ground,  ground,  cheese}
+        std::vector<MapTile>{start,  ground, ground, ground, ground, ground,  cheese}
     },
 
     // Level 2
@@ -62,6 +62,13 @@ const std::vector<std::vector<MapTile>> levels[] = {
     std::vector<std::vector<MapTile>>{
         std::vector<MapTile>{start, ground, wall,  wall,  cheese,  wall },
         std::vector<MapTile>{wall,  ground,  block, ground,  ground ,  pit }
+    },
+    // Level 4
+    std::vector<std::vector<MapTile>>{
+        std::vector<MapTile>{start, ground, ground,  ground,  ground,  pit },
+        std::vector<MapTile>{wall,  wall,  wall, wall,  ground ,  wall },
+        std::vector<MapTile>{wall,  wall,  wall, wall,  ground ,  wall },
+        std::vector<MapTile>{wall,  wall,  wall, wall,  cheese ,  wall }
     }
 };
 
