@@ -3,6 +3,7 @@
 #include <vector>
 #include <QPoint>
 #include <string>
+#include <stack>
 #include "constants.h"
 Simulation::Simulation(std::vector<std::vector<MapTile>> newMap, std::vector<ProgramBlock> newProgram)
     : map(newMap), gameState(notEnded), robotDirection(east), program(newProgram)
@@ -24,6 +25,27 @@ Simulation::Simulation(std::vector<std::vector<MapTile>> newMap, std::vector<Pro
 
     tickCount = 0;
     currentBlock = 0;
+
+    std::stack<int> ifWhileStack;
+    for(unsigned long long index = 0; index < program.size(); index++){
+        switch(program[index]){
+        case ifStatement:
+        case whileLoop:
+             ifWhileStack.push(index);
+            break;
+        case endIf:
+        case endWhile:{
+            int start = ifWhileStack.top();
+            ifWhileStack.pop();
+            ifWhileToEnd.insert({start, index});
+            endToIfWhile.insert({index, start});
+            break;
+        }
+        default:
+            break;
+        }
+    }
+
 }
 
 void Simulation::step(){
@@ -34,29 +56,13 @@ void Simulation::step(){
     }
     tickCount++;
     switch(program[currentBlock]){
+        case begin:
+            break;
         case moveForward:{
             currentBlock++;
-            QPoint newPos(robotPos);
-            QPoint newBoxPos(robotPos);
-            //qDebug() << newPos;
-            switch(robotDirection){
-                case north:
-                    newPos.setY(newPos.y() - 1);
-                    newBoxPos.setY(newBoxPos.y() - 2);
-                    break;
-                case south:
-                    newPos.setY(newPos.y() + 1);
-                    newBoxPos.setY(newBoxPos.y() + 2);
-                    break;
-                case east:
-                    newPos.setX(newPos.x() + 1);
-                    newBoxPos.setX(newBoxPos.x() + 2);
-                    break;
-                case west:
-                    newPos.setX(newPos.x() - 1);
-                    newBoxPos.setX(newBoxPos.x() - 2);
-                    break;
-            }
+            QPoint newPos = getFacingPoint(1);
+            QPoint newBoxPos= getFacingPoint(2);
+
             //qDebug() << newPos;
             //qDebug() << checkInBounds(newPos);
             if(!checkInBounds(newPos)){
@@ -145,11 +151,14 @@ void Simulation::step(){
             break;
         case endWhile:
             break;
+        case endIf:
+            break;
         case conditionNot:
         case conditionFacingBlock:
         case conditionFacingWall:
         case conditionFacingPit:
-        case endIf:
+        case conditionFacingCheese:
+        case blank:
             qDebug() << "Ooops should not be here!!!!!!!!";
             break;
     }
@@ -160,11 +169,42 @@ void Simulation::setLost(){
     robotPos = QPoint(-1, -1);
 }
 
+QPoint Simulation::getFacingPoint(int offset){
+    QPoint newPos(robotPos);
+    switch(robotDirection){
+        case north:
+            newPos.setY(newPos.y() - offset);
+            break;
+        case south:
+            newPos.setY(newPos.y() + offset);
+            break;
+        case west:
+            newPos.setX(newPos.x() - offset);
+            break;
+        case east:
+            newPos.setX(newPos.x() + offset);
+            break;
+    }
+    return newPos;
+}
+
 bool Simulation::checkInBounds(QPoint point){
     return point.x() != -1 && point.y() != -1 &&
         point.x() != width && point.y() != height;
 }
 
+bool Simulation::checkCondition(bool isNot, ProgramBlock condition){
+
+    switch(condition){
+        case conditionFacingBlock:
+        case conditionFacingWall:
+        case conditionFacingPit:
+        case conditionFacingCheese:
+        default:
+            break;
+    }
+    return isNot;
+}
 void Simulation::printGameState(){
     switch(gameState){
         case lost:

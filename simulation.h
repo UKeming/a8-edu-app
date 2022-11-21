@@ -20,6 +20,8 @@ private:
     std::vector<ProgramBlock> program;
     int tickCount;
     int currentBlock;
+    std::map<int, int> ifWhileToEnd;
+    std::map<int, int> endToIfWhile;
 public:
     Simulation(std::vector<std::vector<MapTile>> newMap, std::vector<ProgramBlock> newProgram);
     void step();
@@ -28,6 +30,8 @@ public:
 private:
     void setLost();
     bool checkInBounds(QPoint);
+    bool checkCondition(bool, ProgramBlock);
+    QPoint getFacingPoint(int offset = 1);
 
 };
 
