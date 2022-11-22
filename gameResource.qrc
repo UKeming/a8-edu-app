@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/elements">
+        <file>robot-idle.gif</file>
+        <file>robot-run.gif</file>
+        <file>brickwall.jpg</file>
+        <file>cheese.png</file>
+    </qresource>
+</RCC>

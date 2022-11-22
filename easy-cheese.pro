@@ -56,6 +56,7 @@ SOURCES += \
     Box2D/Dynamics/b2WorldCallbacks.cpp \
     Box2D/Rope/b2Rope.cpp \
     celebrationwindow.cpp \
+    gamecanvas.cpp \
     gamemodel.cpp \
     gamewindow.cpp \
     main.cpp \
@@ -111,6 +112,7 @@ HEADERS += \
     Box2D/Rope/b2Rope.h \
     celebrationwindow.h \
     constants.h \
+    gamecanvas.h \
     gamemodel.h \
     gamewindow.h \
     levelselectwindow.h
@@ -127,4 +129,8 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 DISTFILES += \
     Box2D/Box2DConfig.cmake \
-    Box2D/CMakeLists.txt
+    Box2D/CMakeLists.txt \
+    robot-idle.gif
+
+RESOURCES += \
+    gameResource.qrc
