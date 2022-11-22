@@ -17,5 +17,8 @@ public:
 
 private:
     Ui::LevelSelectWindow *ui;
+
+private slots:
+    void openLevel(const QModelIndex& level);
 };
 #endif // LEVELSELECTWINDOW_H
