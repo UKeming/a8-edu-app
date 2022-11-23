@@ -13,8 +13,12 @@ GameWindow::GameWindow(GameModel& model, QWidget *parent) :
 {
     ui->setupUi(this);
 
-    // Set a timer for running
+    robotSize = 90;
 
+    // Set a timer to check the postion of robot
+//    robotTimer = new QTimer();
+//    robotTimer->start(10);
+//    connect(robotTimer, &QTimer::timeout, this, &GameWindow::refreshRobot);
 
     // Just for test, remove in final version
     connect(ui->startButton, &QPushButton::clicked, this, &GameWindow::gameStartTest);
@@ -34,20 +38,6 @@ GameWindow::GameWindow(GameModel& model, QWidget *parent) :
     // Show the temp map
     auto canvas = new GameCanvas(ui->scrollAreaWidgetContents, tempMap);
 
-    // Setup idle robot label
-//    ui->robotLabel->setVisible(false);
-//    QMovie *robotmovie = new QMovie(":/elements/robot-idle.gif");
-//    robotmovie->setScaledSize(QSize(50, 50));
-//    ui->robotLabel->setMovie(robotmovie);
-//    robotmovie->start();
-
-    // Setip running robot label
-//    ui->runningRobotLabel->setVisible(false);
-//    QMovie *runningRobotmovie = new QMovie(":/elements/robot-run.gif");
-//    runningRobotmovie->setScaledSize(QSize(50, 50));
-//    ui->robotLabel->setMovie(runningRobotmovie);
-//    runningRobotmovie->start();
-
     connect(canvas, &GameCanvas::showRobot, this, &GameWindow::showIdleRobot);
 
 
@@ -58,48 +48,78 @@ GameWindow::~GameWindow()
     delete ui;
 }
 
+void GameWindow::refreshRobot()
+{
+    // QPoint* destination = ...getRobotPos();
+    QPoint destination = QPoint(0, 0);
+    if(destination.x() != robotX || destination.y() != robotY)
+    {
+        robotX = destination.x();
+        robotY = destination.y();
+        if(destination.x() >= robotX && !facingRight)
+        {
+            facingRightRunning();
+            facingRight = true;
+        }
+        if(destination.x() < robotX && facingRight)
+        {
+            facingLeftRunning();
+            facingRight = false;
+        }
+        ui->robotLabel->setGeometry(robotX,robotY,robotSize,robotSize);
+    }
+    showIdleRobot(destination);
+}
+
 void GameWindow::showIdleRobot(QPoint position)
 {
-    int x = position.x() + gameAreaX;
-    int y = position.y() + gameAreaY;
-
     robotX = position.x() + gameAreaX;
     robotY = position.y() + gameAreaY;
 
     QMovie *robotmovie = new QMovie(":/elements/robot-idle.gif");
-    robotmovie->setScaledSize(QSize(50, 50));
+    robotmovie->setScaledSize(QSize(robotSize, robotSize));
     ui->robotLabel->setMovie(robotmovie);
     robotmovie->start();
 
-    ui->robotLabel->setGeometry(x,y,60,60);
+    ui->robotLabel->setGeometry(robotX,robotY,robotSize,robotSize);
     ui->robotLabel->setVisible(true);
 }
 
-void GameWindow::showMovingRobot(QPoint position)
+void GameWindow::facingRightWaiting()
 {
-    int x = position.x() + gameAreaX;
-    int y = position.y() + gameAreaY;
-
-    QMovie *runningRobotmovie = new QMovie(":/elements/robot-run.gif");
-    runningRobotmovie->setScaledSize(QSize(50, 50));
-    ui->robotLabel->setMovie(runningRobotmovie);
-    runningRobotmovie->start();
-
-    ui->robotLabel->setGeometry(x,y,60,60);
+    QMovie *robotmovie = new QMovie(":/elements/robot-idle-right.gif");
+    robotmovie->setScaledSize(QSize(robotSize, robotSize));
+    ui->robotLabel->setMovie(robotmovie);
+    robotmovie->start();
 }
 
-void GameWindow::showOneBrick(QPoint position)
+void GameWindow::facingLeftWaiting()
 {
-//    int x = position.x();
-//    int y = position.y();
-//    QPixmap image(":/elements/brickwall.jpg");
-//    image.scaled(QSize(50, 50));
+    QMovie *robotmovie = new QMovie(":/elements/robot-idle-left.gif");
+    robotmovie->setScaledSize(QSize(robotSize, robotSize));
+    ui->robotLabel->setMovie(robotmovie);
+    robotmovie->start();
+}
 
-//    QLabel *label = new QLabel();
-//    label->setPixmap(image);
-//    label->setGeometry(x,y,60,60);
-//    ui->bricksLayout->addWidget(label,1,0);
-//    label->show();
+void GameWindow::facingRightRunning()
+{
+    QMovie *runningRobotmovie = new QMovie(":/elements/robot-run-right.gif");
+    runningRobotmovie->setScaledSize(QSize(robotSize, robotSize));
+    ui->robotLabel->setMovie(runningRobotmovie);
+    runningRobotmovie->start();
+}
+
+void GameWindow::facingLeftRunning()
+{
+    QMovie *runningRobotmovie = new QMovie(":/elements/robot-run-left.gif");
+    runningRobotmovie->setScaledSize(QSize(robotSize, robotSize));
+    ui->robotLabel->setMovie(runningRobotmovie);
+    runningRobotmovie->start();
+}
+
+void GameWindow::changeMap(std::vector<std::vector<MapTile>> map)
+{
+    auto canvas = new GameCanvas(ui->scrollAreaWidgetContents, map);
 }
 
 void GameWindow::gameStartTest()
@@ -112,18 +132,6 @@ void GameWindow::gameStartTest()
 
 void GameWindow::runningTest()
 {
-    QPoint robotPosition = QPoint(0, 0);
 
-    robotTimer = new QTimer();
-    connect(robotTimer, &QTimer::timeout, this, &GameWindow::move);
-    robotTimer->start(30);
-
-    showMovingRobot(robotPosition);
-}
-
-void GameWindow::move()
-{
-    robotX++;
-    ui->robotLabel->setGeometry(robotX,robotY,60,60);
 }
 

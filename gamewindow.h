@@ -1,6 +1,7 @@
 #ifndef GAMEWINDOW_H
 #define GAMEWINDOW_H
 
+#include "constants.h"
 #include "gamemodel.h"
 
 #include <QMainWindow>
@@ -24,6 +25,8 @@ private:
     int gameAreaY;
     int robotX;
     int robotY;
+    int robotSize;
+    bool facingRight;
     QTimer* robotTimer;
 
 private slots:
@@ -31,20 +34,37 @@ private slots:
      * @brief gameStartTest Test for the elements display
      */
     void gameStartTest();
-    void runningTest();
-
-    //void robotMoving();
 
     /**
-     * @brief showIdleRobot
+     * @brief runningTest
+     */
+    void runningTest();
+
+    /**
+     * @brief refreshingRobot Get the robot position, if robot position changed, set the position again
+     */
+    void refreshRobot();
+
+    /**
+     * @brief showIdleRobot Show the robot is wait commands
      */
     void showIdleRobot(QPoint);
 
-    void showOneBrick(QPoint);
+    /**
+     * @brief facingRightWaiting
+     */
+    void facingRightWaiting();
 
-    void showMovingRobot(QPoint);
+    void facingLeftWaiting();
 
-    void move();
+    void facingRightRunning();
+
+    void facingLeftRunning();
+
+    /**
+     * @brief changeMap Change the map in the new level
+     */
+    void changeMap(std::vector<std::vector<MapTile>>);
 
 signals:
     void drawWall(int x, int y);

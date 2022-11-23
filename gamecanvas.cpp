@@ -12,7 +12,7 @@ GameCanvas::GameCanvas(QWidget* parent, std::vector<std::vector<MapTile>> map)
 
 void GameCanvas::paintEvent(QPaintEvent * /* event */)
 {
-    int brickSize = 60;
+    int brickSize = 100;
 
     QPainter painter(this);
     painter.begin(this);
