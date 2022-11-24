@@ -1,4 +1,5 @@
-#include "gamewindow.h"
+#include "levelselectwindow.h"
+#include "celebrationwindow.h"
 
 #include <QApplication>
 
@@ -6,9 +7,8 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    GameModel model;
-
-    GameWindow w(model);
-    w.show();
+    LevelSelectWindow levelSelectWindow;
+    CelebrationWindow celebrationWindow;
+    celebrationWindow.show();
     return a.exec();
 }
