@@ -14,7 +14,7 @@ enum MapTile {
 };
 
 enum ProgramBlock {
-    // begin = 9,
+    begin = 9,
     moveForward = 1,
     turnLeft = 2,
     turnRight = 3,
