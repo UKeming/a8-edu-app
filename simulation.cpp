@@ -232,6 +232,13 @@ bool Simulation::checkCondition(bool isNot, ProgramBlock condition){
     }
     return isNot ? !flag : flag;
 }
+
+QPoint Simulation::getCheesePos(){
+    return cheesePos;
+}
+QPoint Simulation::getRobotPos(){
+    return robotPos;
+}
 void Simulation::printGameState(){
     switch(gameState){
         case lost:

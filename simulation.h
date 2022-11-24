@@ -8,7 +8,6 @@
 class Simulation
 {
 private:
-    std::vector<std::vector<MapTile>> map;
     gameState gameState;
     int width;
     int height;
@@ -25,7 +24,9 @@ private:
 public:
     Simulation(std::vector<std::vector<MapTile>> newMap, std::vector<ProgramBlock> newProgram);
     void step();
+    std::vector<std::vector<MapTile>> map;
     QPoint getRobotPos();
+    QPoint getCheesePos();
     void printGameState();
 private:
     void setLost();
