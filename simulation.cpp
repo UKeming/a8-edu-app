@@ -239,6 +239,9 @@ QPoint Simulation::getCheesePos(){
 QPoint Simulation::getRobotPos(){
     return robotPos;
 }
+int Simulation::getCurrentBlock(){
+    return currentBlock;
+}
 void Simulation::printGameState(){
     switch(gameState){
         case lost:

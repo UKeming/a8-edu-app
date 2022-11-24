@@ -27,6 +27,7 @@ public:
     std::vector<std::vector<MapTile>> map;
     QPoint getRobotPos();
     QPoint getCheesePos();
+    int getCurrentBlock();
     void printGameState();
 private:
     void setLost();
