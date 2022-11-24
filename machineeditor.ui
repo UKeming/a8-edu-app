@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MachineEditor</class>
+ <widget class="QMainWindow" name="MachineEditor">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1366</width>
+    <height>768</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="autoFillBackground">
+   <bool>false</bool>
+  </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout" stretch="1,8,0,0,0">
+    <item>
+     <layout class="QHBoxLayout" name="blockChoiceBar">
+      <property name="spacing">
+       <number>6</number>
+      </property>
+      <property name="sizeConstraint">
+       <enum>QLayout::SetDefaultConstraint</enum>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QGroupBox" name="conditionGroupBox">
+        <property name="title">
+         <string>Condition</string>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_4">
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout">
+           <item>
+            <widget class="QPushButton" name="notButton">
+             <property name="text">
+              <string>Not</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="facingPitButton">
+             <property name="text">
+              <string>Facing Pit</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="facingCheese">
+             <property name="text">
+              <string>FacingCheese</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="facingBlock">
+             <property name="text">
+              <string>Facing Block</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="facingWallButton">
+             <property name="text">
+              <string>Facing Wall</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QGroupBox" name="conditionalGroupBox">
+        <property name="title">
+         <string>Conditional Statement</string>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_5">
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_2">
+           <item>
+            <widget class="QPushButton" name="ifButton">
+             <property name="text">
+              <string>if</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="endIfButton">
+             <property name="text">
+              <string>End If</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="whileButton">
+             <property name="text">
+              <string>While</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="endWhileButton">
+             <property name="text">
+              <string>End While</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+      </item>
+      <item>
+       <widget class="QGroupBox" name="generalGroupBox">
+        <property name="title">
+         <string>General</string>
+        </property>
+        <layout class="QHBoxLayout" name="horizontalLayout_6">
+         <item>
+          <layout class="QHBoxLayout" name="horizontalLayout_3">
+           <item>
+            <widget class="QPushButton" name="turnLeftButton">
+             <property name="text">
+              <string>Turn Left</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="turnRightButton">
+             <property name="text">
+              <string>Turn Right</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="moveForward">
+             <property name="text">
+              <string>Move Forward</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="eatCheeseButton">
+             <property name="text">
+              <string>Eat Cheese</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </item>
+        </layout>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="mainLayout">
+      <property name="spacing">
+       <number>6</number>
+      </property>
+     </layout>
+    </item>
+    <item>
+     <widget class="QPushButton" name="resetBegin">
+      <property name="font">
+       <font>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Reset Begin</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="connectButton">
+      <property name="focusPolicy">
+       <enum>Qt::StrongFocus</enum>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">font: 700 9pt &quot;Microsoft YaHei UI&quot;;</string>
+      </property>
+      <property name="text">
+       <string>Connect Blocks</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QPushButton" name="getOutput">
+      <property name="styleSheet">
+       <string notr="true">background-color: rgb(170, 225, 127);
+font: 700 9pt &quot;Microsoft YaHei UI&quot;;</string>
+      </property>
+      <property name="text">
+       <string>Get Output</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1366</width>
+     <height>22</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

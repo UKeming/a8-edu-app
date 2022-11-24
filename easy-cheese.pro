@@ -58,6 +58,8 @@ SOURCES += \
     celebrationwindow.cpp \
     gamemodel.cpp \
     gamewindow.cpp \
+    machineeditor.cpp \
+    machinegraph.cpp \
     main.cpp \
     levelselectwindow.cpp
 
@@ -113,12 +115,15 @@ HEADERS += \
     constants.h \
     gamemodel.h \
     gamewindow.h \
-    levelselectwindow.h
+    levelselectwindow.h \
+    machineeditor.h \
+    machinegraph.h
 
 FORMS += \
     celebrationwindow.ui \
     gamewindow.ui \
-    levelselectwindow.ui
+    levelselectwindow.ui \
+    machineeditor.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
