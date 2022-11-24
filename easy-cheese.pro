@@ -62,7 +62,8 @@ SOURCES += \
     machineeditor.cpp \
     machinegraph.cpp \
     main.cpp \
-    levelselectwindow.cpp
+    levelselectwindow.cpp \
+    simulation.cpp
 
 HEADERS += \
     Box2D/Box2D.h \
@@ -120,6 +121,7 @@ HEADERS += \
     levelselectwindow.h \
     machineeditor.h \
     machinegraph.h
+    simulation.h
 
 FORMS += \
     celebrationwindow.ui \

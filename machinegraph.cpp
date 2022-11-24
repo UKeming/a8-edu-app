@@ -14,7 +14,7 @@ MachineGraph::MachineGraph(QWidget *parent) : QWidget{parent} {
   this->setAttribute(Qt::WA_Hover, true);
 
   map[0] = std::tuple<ProgramBlock, QPointF, QPoint>(
-      ProgramBlock::begin,
+      ProgramBlock::beginBlock,
       QPointF(this->width() / 2 - GENERAL_BLOCK_SIZE_X / 2,
               this->height() / 2 - GENERAL_BLOCK_SIZE_Y / 2),
       QPoint(GENERAL_BLOCK_SIZE_X, GENERAL_BLOCK_SIZE_Y));
@@ -99,7 +99,7 @@ void MachineGraph::drawBlock(int blockID, QPainter &painter) {
     }
   }
 
-  if (type == ProgramBlock::begin) {
+  if (type == ProgramBlock::beginBlock) {
     blockColor = beginBlockColor;
 
   } else if (type == ProgramBlock::ifStatement || type == ProgramBlock::endIf) {
@@ -512,7 +512,7 @@ const std::string MachineGraph::getText(ProgramBlock p) {
     return "Facing Wall";
   case ProgramBlock::conditionFacingCheese:
     return "Facing Cheese";
-  case ProgramBlock::begin:
+  case ProgramBlock::beginBlock:
     return "Begin";
   case ProgramBlock::blank:
     return "";
