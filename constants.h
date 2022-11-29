@@ -49,26 +49,74 @@ enum direction {
 const std::vector<std::vector<MapTile>> levels[] = {
     // Level 1
     std::vector<std::vector<MapTile>>{
-        std::vector<MapTile>{start,  ground, ground, ground, ground, ground,  cheese}
+        std::vector<MapTile>{start,  ground, ground,  ground,  cheese, ground}
     },
 
     // Level 2
     std::vector<std::vector<MapTile>>{
         std::vector<MapTile>{start, ground,  wall,   cheese},
-        std::vector<MapTile>{wall,  ground,  ground,  ground }
+        std::vector<MapTile>{wall,  ground,  ground,  ground },
+        std::vector<MapTile>{wall,  wall,  wall,  wall }
     },
-
     // Level 3
     std::vector<std::vector<MapTile>>{
-        std::vector<MapTile>{start, ground, wall,  wall,  cheese,  wall },
-        std::vector<MapTile>{wall,  ground,  block, ground,  ground ,  pit }
+        std::vector<MapTile>{start, ground, block,  ground,  ground},
+        std::vector<MapTile>{wall,  wall,  wall, ground,  wall},
+        std::vector<MapTile>{wall,  wall,  wall, cheese,  wall},
+        std::vector<MapTile>{wall,  wall,  wall, wall,  wall}
     },
+
     // Level 4
     std::vector<std::vector<MapTile>>{
-        std::vector<MapTile>{start, ground, ground,  ground,  ground,  pit },
-        std::vector<MapTile>{wall,  wall,  wall, wall,  ground ,  wall },
-        std::vector<MapTile>{wall,  wall,  wall, wall,  ground ,  wall },
-        std::vector<MapTile>{wall,  wall,  wall, wall,  cheese ,  wall }
+        std::vector<MapTile>{start, ground, ground,  ground,  ground,  ground, wall },
+        std::vector<MapTile>{wall,  wall,   wall,    wall,    wall,    ground, wall },
+        std::vector<MapTile>{wall,  ground, ground,  ground,  wall,    ground, wall },
+        std::vector<MapTile>{wall,  ground, wall,    cheese,  wall,    ground, wall },
+        std::vector<MapTile>{wall,  ground, wall,    wall,    wall,    ground, wall },
+        std::vector<MapTile>{wall,  ground, ground,  ground,  ground,  ground, wall },
+        std::vector<MapTile>{wall,  wall,   wall,    wall,    wall,    wall, wall }
+    },
+
+    // Level 5
+    std::vector<std::vector<MapTile>>{
+        std::vector<MapTile>{start, ground, ground,  ground,  ground,  wall },
+        std::vector<MapTile>{wall,  wall,   wall,    wall,    ground,  wall },
+        std::vector<MapTile>{wall,  ground, ground,  ground,  ground ,  wall },
+        std::vector<MapTile>{wall,  ground, wall,    wall,    wall,     wall },
+        std::vector<MapTile>{wall,  ground, ground,  ground,  ground,  wall },
+        std::vector<MapTile>{wall,  wall,   wall,    wall,    ground,  wall },
+        std::vector<MapTile>{wall,  cheese, ground,  ground,  ground ,  wall },
+        std::vector<MapTile>{wall,  wall, wall,    wall,    wall,     wall },
+        std::vector<MapTile>{}
+    },
+
+    // Level 6
+    std::vector<std::vector<MapTile>>{
+        std::vector<MapTile>{start, ground,  wall,   wall,    wall,   cheese, wall},
+        std::vector<MapTile>{wall,  ground,  wall,   ground,  ground, ground, pit},
+        std::vector<MapTile>{wall,  ground,  block, ground,  pit,    wall,   wall},
+        std::vector<MapTile>{wall,  pit,     wall,   wall,    wall,   wall,   wall}
+    },
+
+
+    // Level 7
+    std::vector<std::vector<MapTile>>{
+        std::vector<MapTile>{start, ground, ground, ground, ground, wall },
+        std::vector<MapTile>{wall, wall,    wall,   wall,   block, wall },
+        std::vector<MapTile>{wall, ground,  ground, ground, ground, wall },
+        std::vector<MapTile>{wall, ground,  wall,   wall,   ground, wall },
+        std::vector<MapTile>{wall, ground,  ground, ground, ground, cheese },
+        std::vector<MapTile>{wall, wall, wall, wall, wall, wall }
+    },
+
+    // Level 8
+    std::vector<std::vector<MapTile>>{
+        std::vector<MapTile>{start, ground,  ground, ground, ground, wall,   wall,   wall,   wall,   wall},
+        std::vector<MapTile>{wall,  wall,    wall,   wall,   block,  wall,   ground, ground, ground, wall },
+        std::vector<MapTile>{wall,  ground,  ground, ground, ground, wall,   ground, wall,   ground, wall },
+        std::vector<MapTile>{wall,  ground,  wall,   wall,   ground, wall,   ground, wall,   ground, wall },
+        std::vector<MapTile>{wall,  ground,  ground, ground, ground, ground, block, ground, ground, wall },
+        std::vector<MapTile>{wall,  wall,    wall,   wall,   wall,   wall,   wall,   wall,   cheese, wall }
     }
 };
 
