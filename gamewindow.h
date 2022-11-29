@@ -71,8 +71,22 @@ private slots:
 
     void facingLeftRunning();
 
+<<<<<<< HEAD
+=======
+    /**
+     * @brief changeMap Change the map in the new level
+     */
+    void changeMap(std::vector<std::vector<MapTile>>);
+
+    /**
+     * @brief showEducationalMessage Shows an educational message to the user.
+     */
+    void showEducationalMessage(QString);
+
+>>>>>>> c48f7bb (Add educational dialog boxes for levels)
 signals:
     void drawWall(int x, int y);
+    void viewReady();
 };
 
 #endif // GAMEWINDOW_H

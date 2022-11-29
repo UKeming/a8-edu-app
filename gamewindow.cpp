@@ -6,6 +6,7 @@
 #include <QHBoxLayout>
 #include <QPainter>
 #include <QColor>
+#include <QMessageBox>
 
 GameWindow::GameWindow(GameModel& model, QWidget *parent) :
     QMainWindow(parent),
@@ -32,6 +33,12 @@ GameWindow::GameWindow(GameModel& model, QWidget *parent) :
     gameAreaX = ui->gameArea->x();
     gameAreaY = ui->gameArea->y();
 
+    // Connect the view to the model
+    connect(&model, &GameModel::showEducationalMessage, this, &GameWindow::showEducationalMessage);
+    connect(&model, &GameModel::mapLoaded, this, &GameWindow::changeMap);
+    connect(this, &GameWindow::viewReady, &model, &GameModel::loadLevel);
+
+    emit viewReady();
 }
 
 GameWindow::~GameWindow()
@@ -137,4 +144,9 @@ void GameWindow::gameStartTest()
 void GameWindow::runningTest()
 {
 
+}
+
+void GameWindow::showEducationalMessage(QString message) {
+    qDebug() << "Message: " << message;
+    QMessageBox::information(this, "About This Level", message);
 }

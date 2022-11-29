@@ -3,6 +3,7 @@
 
 #include <map>
 #include <vector>
+#include <QString>
 
 enum MapTile {
     start = 0,
@@ -126,6 +127,32 @@ const std::vector<std::vector<MapTile>> levels[] = {
         std::vector<MapTile>{wall,  ground,  ground, ground, ground, ground, block, ground, ground, wall },
         std::vector<MapTile>{wall,  wall,    wall,   wall,   wall,   wall,   wall,   wall,   cheese, wall }
     }
+};
+
+const auto educationalMessages = std::vector<QString>{
+        //Level 1
+        "Welcome! Lorem ipsum dolor sit amet",
+
+        //Level 2
+        "Lorem ipsum dolor sit amet",
+
+        //Level 3
+        "Lorem ipsum dolor sit amet",
+
+        //Level 4
+        "Lorem ipsum dolor sit amet",
+
+        //Level 5
+        "Lorem ipsum dolor sit amet",
+
+        //Level 6
+        "Lorem ipsum dolor sit amet",
+
+        //Level 7
+        "Lorem ipsum dolor sit amet",
+
+        //Level 8
+        "Lorem ipsum dolor sit amet",
 };
 
 #endif // CONSTANTS_H
