@@ -108,7 +108,16 @@ const std::vector<std::vector<MapTile>> levels[] = {
         std::vector<MapTile>{wall, wall, wall, wall, wall, wall }
     },
 
+
     // Level 8
+    std::vector<std::vector<MapTile>>{
+        std::vector<MapTile>{wall, wall,  cheese, wall, pit, wall,   wall},
+        std::vector<MapTile>{wall, ground,  block, block, block, ground,   wall},
+        std::vector<MapTile>{cheese, ground,  ground, ground, ground, ground,   wall},
+        std::vector<MapTile>{wall, wall,  wall, wall, wall, wall,   wall}
+    },
+
+    // Level 9
     std::vector<std::vector<MapTile>>{
         std::vector<MapTile>{start, ground,  ground, ground, ground, wall,   wall,   wall,   wall,   wall},
         std::vector<MapTile>{wall,  wall,    wall,   wall,   block,  wall,   ground, ground, ground, wall },
