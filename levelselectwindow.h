@@ -1,6 +1,7 @@
 #ifndef LEVELSELECTWINDOW_H
 #define LEVELSELECTWINDOW_H
 
+#include "constants.h"
 #include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
@@ -14,6 +15,9 @@ class LevelSelectWindow : public QMainWindow
 public:
     LevelSelectWindow(QWidget *parent = nullptr);
     ~LevelSelectWindow();
+
+signals:
+    void selectLevel(std::vector<std::vector<MapTile>>);
 
 private:
     Ui::LevelSelectWindow *ui;

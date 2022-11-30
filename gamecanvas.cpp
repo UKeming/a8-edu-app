@@ -20,21 +20,29 @@ void GameCanvas::paintEvent(QPaintEvent * /* event */)
     QPixmap wallMap(":/elements/brickwall.jpg");
     QPixmap scaledWallMap = wallMap.scaled(brickSize, brickSize, Qt::KeepAspectRatio);
 
-    QPixmap cheeseMap(":/elements/cheese.png");
-    QPixmap scaledCheeseMap = cheeseMap.scaled(brickSize, brickSize, Qt::KeepAspectRatio);
+    QPixmap blockMap(":/elements/block.png");
+    QPixmap scaledBlockMap = blockMap.scaled(brickSize, brickSize, Qt::KeepAspectRatio);
 
     QColor groundColor = QColor::fromRgb(222,184,135);
 
     for(unsigned long long y = 0; y < map.size(); y++){
             for(unsigned long long x = 0; x < map[y].size(); x++){
+                if(map[y][x] == start){
+                    painter.fillRect(x*brickSize, y*brickSize, brickSize, brickSize, groundColor);
+                    emit showRobot(QPoint(x,y));
+                }
                 if(map[y][x] == cheese){
-                    painter.fillRect(x*brickSize, y*brickSize, brickSize, brickSize, scaledCheeseMap);
+                    painter.fillRect(x*brickSize, y*brickSize, brickSize, brickSize, groundColor);
+                    emit showCheese(QPoint(x,y));
                 }
                 if(map[y][x] == ground){
                     painter.fillRect(x*brickSize, y*brickSize, brickSize, brickSize, groundColor);
                 }
                 if(map[y][x] == wall){
                     painter.fillRect(x*brickSize, y*brickSize, brickSize, brickSize, scaledWallMap);
+                }
+                if(map[y][x] == block){
+                    painter.fillRect(x*brickSize, y*brickSize, brickSize, brickSize, scaledBlockMap);
                 }
             }
         }

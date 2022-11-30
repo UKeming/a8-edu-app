@@ -120,7 +120,8 @@ HEADERS += \
     gamewindow.h \
     levelselectwindow.h \
     machineeditor.h \
-    machinegraph.h
+    machinegraph.h \
+    simulation.h
     simulation.h
 
 FORMS += \

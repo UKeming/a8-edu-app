@@ -24,9 +24,11 @@ LevelSelectWindow::~LevelSelectWindow()
 }
 
 void LevelSelectWindow::openLevel(const QModelIndex& level) {
-    qDebug() << level.row();
+    int selectedLevel = level.row();
+    qDebug() << selectedLevel;
     GameModel model;
     GameWindow* window = new GameWindow(model);
+    window->changeMap(levels[selectedLevel]);
     window->show();
     this->close();
 }

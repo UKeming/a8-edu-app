@@ -15,31 +15,22 @@ GameWindow::GameWindow(GameModel& model, QWidget *parent) :
 
     robotSize = 90;
 
-    // Set a timer to check the postion of robot
-//    robotTimer = new QTimer();
-//    robotTimer->start(10);
-//    connect(robotTimer, &QTimer::timeout, this, &GameWindow::refreshRobot);
+    QMovie *robotmovie = new QMovie(":/elements/robot-idle-right.gif");
+    robotmovie->setScaledSize(QSize(robotSize, robotSize));
+    ui->robotLabel->setMovie(robotmovie);
+    robotmovie->start();
+
+    ui->robotLabel->setVisible(false);
+
 
     // Just for test, remove in final version
     connect(ui->startButton, &QPushButton::clicked, this, &GameWindow::gameStartTest);
     connect(ui->runningButton, &QPushButton::clicked, this, &GameWindow::runningTest);
 
+
     // Get the game play area coordinate, for robot display
     gameAreaX = ui->gameArea->x();
     gameAreaY = ui->gameArea->y();
-
-    // Canvas setup
-    std::vector<std::vector<MapTile>> tempMap = std::vector<std::vector<MapTile>>{
-                                                                                 std::vector<MapTile>{ground, ground, ground,  ground,  ground,  wall },
-                                                                                 std::vector<MapTile>{wall,  wall,  wall, wall,  ground ,  wall },
-                                                                                 std::vector<MapTile>{wall,  wall,  wall, wall,  ground ,  wall },
-                                                                                 std::vector<MapTile>{wall,  wall,  wall, wall,  cheese ,  wall }
-                                                                             };
-    // Show the temp map
-    auto canvas = new GameCanvas(ui->scrollAreaWidgetContents, tempMap);
-
-    connect(canvas, &GameCanvas::showRobot, this, &GameWindow::showIdleRobot);
-
 
 }
 
@@ -76,13 +67,22 @@ void GameWindow::showIdleRobot(QPoint position)
     robotX = position.x() + gameAreaX;
     robotY = position.y() + gameAreaY;
 
-    QMovie *robotmovie = new QMovie(":/elements/robot-idle.gif");
-    robotmovie->setScaledSize(QSize(robotSize, robotSize));
-    ui->robotLabel->setMovie(robotmovie);
-    robotmovie->start();
-
     ui->robotLabel->setGeometry(robotX,robotY,robotSize,robotSize);
     ui->robotLabel->setVisible(true);
+}
+
+void GameWindow::showCheese(QPoint position)
+{
+    int cheeseX = position.x() + gameAreaX;
+    int cheeseY = position.y() + gameAreaY;
+
+    QPixmap cheeseMap(":/elements/cheese.png");
+    QPixmap scaledCheeseMap = cheeseMap.scaled(robotSize, robotSize, Qt::KeepAspectRatio);
+
+    ui->cheese_label->setPixmap(scaledCheeseMap);
+
+    ui->cheese_label->setGeometry(cheeseX,cheeseY,robotSize,robotSize);
+    ui->cheese_label->setVisible(true);
 }
 
 void GameWindow::facingRightWaiting()
@@ -120,11 +120,12 @@ void GameWindow::facingLeftRunning()
 void GameWindow::changeMap(std::vector<std::vector<MapTile>> map)
 {
     auto canvas = new GameCanvas(ui->scrollAreaWidgetContents, map);
+    connect(canvas, &GameCanvas::showRobot, this, &GameWindow::showIdleRobot);
+    connect(canvas, &GameCanvas::showCheese, this, &GameWindow::showCheese);
 }
 
 void GameWindow::gameStartTest()
 {
-    // QPoint robotPosition = QPoint(gameAreaX, gameAreaY);
     QPoint robotPosition = QPoint(0, 0);
 
     showIdleRobot(robotPosition);

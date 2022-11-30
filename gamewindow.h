@@ -19,6 +19,11 @@ public:
     explicit GameWindow(GameModel& model, QWidget *parent = nullptr);
     ~GameWindow();
 
+    /**
+     * @brief changeMap Change the map in the new level
+     */
+    void changeMap(std::vector<std::vector<MapTile>>);
+
 private:
     Ui::GameWindow *ui;
     int gameAreaX;
@@ -51,6 +56,11 @@ private slots:
     void showIdleRobot(QPoint);
 
     /**
+     * @brief showCheese Show the cheese
+     */
+    void showCheese(QPoint);
+
+    /**
      * @brief facingRightWaiting
      */
     void facingRightWaiting();
@@ -60,11 +70,6 @@ private slots:
     void facingRightRunning();
 
     void facingLeftRunning();
-
-    /**
-     * @brief changeMap Change the map in the new level
-     */
-    void changeMap(std::vector<std::vector<MapTile>>);
 
 signals:
     void drawWall(int x, int y);

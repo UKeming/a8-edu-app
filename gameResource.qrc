@@ -2,9 +2,12 @@
     <qresource prefix="/elements">
         <file>robot-idle-right.gif</file>
         <file>brickwall.jpg</file>
-        <file>cheese.png</file>
+        <file>question.png</file>
         <file>robot-idle-left.gif</file>
         <file>robot-run-left.gif</file>
         <file>robot-run-right.gif</file>
+        <file>block.png</file>
+        <file>cheese.jpg</file>
+        <file>cheese.png</file>
     </qresource>
 </RCC>
