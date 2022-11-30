@@ -29,11 +29,17 @@ void GameCanvas::paintEvent(QPaintEvent * /* event */)
             for(unsigned long long x = 0; x < map[y].size(); x++){
                 if(map[y][x] == start){
                     painter.fillRect(x*brickSize, y*brickSize, brickSize, brickSize, groundColor);
-                    emit showRobot(QPoint(x,y));
+                    QPoint pos;
+                    pos.setX(x * brickSize);
+                    pos.setY(y * brickSize);
+                    emit showRobot(pos);
                 }
                 if(map[y][x] == cheese){
                     painter.fillRect(x*brickSize, y*brickSize, brickSize, brickSize, groundColor);
-                    emit showCheese(QPoint(x,y));
+                    QPoint pos;
+                    pos.setX(x * brickSize);
+                    pos.setY(y * brickSize);
+                    emit showCheese(pos);
                 }
                 if(map[y][x] == ground){
                     painter.fillRect(x*brickSize, y*brickSize, brickSize, brickSize, groundColor);

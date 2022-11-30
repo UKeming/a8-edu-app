@@ -67,6 +67,9 @@ void GameWindow::showIdleRobot(QPoint position)
     robotX = position.x() + gameAreaX;
     robotY = position.y() + gameAreaY;
 
+    QString x = QString::number(position.x());
+    ui->debugLabel->setText("x is " + x);
+
     ui->robotLabel->setGeometry(robotX,robotY,robotSize,robotSize);
     ui->robotLabel->setVisible(true);
 }
