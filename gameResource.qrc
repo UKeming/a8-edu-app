@@ -9,5 +9,6 @@
         <file>block.png</file>
         <file>cheese.jpg</file>
         <file>cheese.png</file>
+        <file>pit.png</file>
     </qresource>
 </RCC>
