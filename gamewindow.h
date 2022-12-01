@@ -60,6 +60,9 @@ private slots:
      */
     void showCheese(QPoint);
 
+    void showProgram();
+
+
     /**
      * @brief facingRightWaiting
      */

@@ -2,6 +2,7 @@
 #include "ui_gamewindow.h"
 #include "gamemodel.h"
 #include "gamecanvas.h"
+#include "machineeditor.h"
 #include <QMovie>
 #include <QHBoxLayout>
 #include <QPainter>
@@ -37,6 +38,9 @@ GameWindow::GameWindow(GameModel& model, QWidget *parent) :
     connect(&model, &GameModel::showEducationalMessage, this, &GameWindow::showEducationalMessage);
     connect(&model, &GameModel::mapLoaded, this, &GameWindow::changeMap);
     connect(this, &GameWindow::viewReady, &model, &GameModel::loadLevel);
+
+    connect(ui->programButton, &QPushButton::clicked, this, &GameWindow::showProgram);
+
 
     emit viewReady();
 }
@@ -149,4 +153,9 @@ void GameWindow::runningTest()
 void GameWindow::showEducationalMessage(QString message) {
     qDebug() << "Message: " << message;
     QMessageBox::information(this, "About This Level", message);
+}
+
+void GameWindow::showProgram() {
+    MachineEditor *editor= new MachineEditor();
+    editor->show();
 }
