@@ -1,5 +1,4 @@
 #include "levelselectwindow.h"
-#include "celebrationwindow.h"
 
 #include "gamewindow.h"
 #include "simulation.h"
@@ -11,8 +10,7 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 
     LevelSelectWindow levelSelectWindow;
-    CelebrationWindow celebrationWindow;
-    celebrationWindow.show();
+    levelSelectWindow.show();
     return a.exec();
 
 

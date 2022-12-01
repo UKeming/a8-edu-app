@@ -71,8 +71,14 @@ private slots:
 
     void facingLeftRunning();
 
+    /**
+     * @brief showEducationalMessage Shows an educational message to the user.
+     */
+    void showEducationalMessage(QString);
+
 signals:
     void drawWall(int x, int y);
+    void viewReady();
 };
 
 #endif // GAMEWINDOW_H
