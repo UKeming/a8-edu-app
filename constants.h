@@ -153,6 +153,9 @@ const auto educationalMessages = std::vector<QString>{
 
         //Level 8
         "Lorem ipsum dolor sit amet",
+
+        //Level 9
+        "",
 };
 
 #endif // CONSTANTS_H
