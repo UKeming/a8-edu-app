@@ -23,6 +23,9 @@ void GameCanvas::paintEvent(QPaintEvent * /* event */)
     QPixmap blockMap(":/elements/block.png");
     QPixmap scaledBlockMap = blockMap.scaled(brickSize, brickSize, Qt::KeepAspectRatio);
 
+    QPixmap pitMap(":/elements/pit.png");
+    QPixmap scaledPitMap = pitMap.scaled(brickSize, brickSize, Qt::KeepAspectRatio);
+
     QColor groundColor = QColor::fromRgb(222,184,135);
 
     for(unsigned long long y = 0; y < map.size(); y++){
@@ -43,6 +46,9 @@ void GameCanvas::paintEvent(QPaintEvent * /* event */)
                 }
                 if(map[y][x] == ground){
                     painter.fillRect(x*brickSize, y*brickSize, brickSize, brickSize, groundColor);
+                }
+                if(map[y][x] == pit){
+                    painter.fillRect(x*brickSize, y*brickSize, brickSize, brickSize, scaledPitMap);
                 }
                 if(map[y][x] == wall){
                     painter.fillRect(x*brickSize, y*brickSize, brickSize, brickSize, scaledWallMap);
