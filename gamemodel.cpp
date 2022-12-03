@@ -9,6 +9,6 @@ GameModel::GameModel(int level, QObject *parent)
 }
 
 void GameModel::loadLevel() {
-    emit mapLoaded(levels[currentLevel]);
+    emit mapLoaded(levels[currentLevel], currentLevel);
     emit showEducationalMessage(educationalMessages[currentLevel]);
 }

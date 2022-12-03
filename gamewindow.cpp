@@ -17,13 +17,13 @@ GameWindow::GameWindow(GameModel& model, QWidget *parent) :
 
     robotSize = 90;
 
+    // set robot git
     QMovie *robotmovie = new QMovie(":/elements/robot-idle-right.gif");
     robotmovie->setScaledSize(QSize(robotSize, robotSize));
     ui->robotLabel->setMovie(robotmovie);
     robotmovie->start();
-
+    // do not show the robot
     ui->robotLabel->setVisible(false);
-
 
     // Just for test, remove in final version
     connect(ui->startButton, &QPushButton::clicked, this, &GameWindow::gameStartTest);
@@ -39,6 +39,9 @@ GameWindow::GameWindow(GameModel& model, QWidget *parent) :
     connect(&model, &GameModel::mapLoaded, this, &GameWindow::changeMap);
     connect(this, &GameWindow::viewReady, &model, &GameModel::loadLevel);
 
+    // When user creates a program
+    connect(editor, &MachineEditor::hereIsProgram, this, &GameWindow::runTheProgram);
+
     connect(ui->programButton, &QPushButton::clicked, this, &GameWindow::showProgram);
 
 
@@ -52,8 +55,8 @@ GameWindow::~GameWindow()
 
 void GameWindow::refreshRobot()
 {
-    // QPoint* destination = ...getRobotPos();
-    QPoint destination = QPoint(0, 0);
+    // QPoint destination = simu.getRobotPos();
+    QPoint destination = QPoint(0,0);
     if(destination.x() != robotX || destination.y() != robotY)
     {
         robotX = destination.x();
@@ -70,16 +73,12 @@ void GameWindow::refreshRobot()
         }
         ui->robotLabel->setGeometry(robotX,robotY,robotSize,robotSize);
     }
-    showIdleRobot(destination);
 }
 
 void GameWindow::showIdleRobot(QPoint position)
 {
     robotX = position.x() + gameAreaX;
     robotY = position.y() + gameAreaY;
-
-    QString x = QString::number(position.x());
-    ui->debugLabel->setText("x is " + x);
 
     ui->robotLabel->setGeometry(robotX,robotY,robotSize,robotSize);
     ui->robotLabel->setVisible(true);
@@ -131,11 +130,26 @@ void GameWindow::facingLeftRunning()
     runningRobotmovie->start();
 }
 
-void GameWindow::changeMap(std::vector<std::vector<MapTile>> map)
+void GameWindow::changeMap(std::vector<std::vector<MapTile>> map, int levelNumber)
 {
+    // show the map on canvas
     auto canvas = new GameCanvas(ui->scrollAreaWidgetContents, map);
+
+    currentMap = map;
+    // get the robot and cheese position from the canvas, and set them on the window
     connect(canvas, &GameCanvas::showRobot, this, &GameWindow::showIdleRobot);
     connect(canvas, &GameCanvas::showCheese, this, &GameWindow::showCheese);
+
+    // show the level number and welcome to the user
+    QString num = QString::number(levelNumber);
+    QString welcome = "Welcome to";
+    QString levelNum = "Level " + num + "!";
+    QFont font1("woshishabi", 32, QFont::Bold);
+    QFont font2("woshishabi", 48, QFont::Bold);
+    ui->welcomeLabel->setText(welcome);
+    ui->welcomeLabel->setFont(font1);
+    ui->levelLabel->setText(levelNum);
+    ui->levelLabel->setFont(font2);
 }
 
 void GameWindow::gameStartTest()
@@ -153,6 +167,13 @@ void GameWindow::runningTest()
 void GameWindow::showEducationalMessage(QString message) {
     qDebug() << "Message: " << message;
     QMessageBox::information(this, "About This Level", message);
+}
+
+void GameWindow::runTheProgram(std::vector<ProgramBlock> currentProgram) {
+    // simu = Simulation(currentMap, currentProgram);
+//    QTimer* runningTimer = new QTimer();
+//    runningTimer->setInterval(25);
+//    connect(runningTimer, &QTimer::timeout, this, &GameWindow::refreshRobot);
 }
 
 void GameWindow::showProgram() {

@@ -81,6 +81,7 @@ public slots:
 
 signals:
   void connectToggled(bool connecting);
+  void hereIsProgram(std::vector<ProgramBlock>);
 };
 
 #endif // MACHINEGRAPH_H

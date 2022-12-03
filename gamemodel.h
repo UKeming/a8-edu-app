@@ -23,7 +23,7 @@ signals:
      * @brief showEducationalMessage Tells listeners that an educational message should be shown to the user
      */
     void showEducationalMessage(QString);
-    void mapLoaded(const std::vector<std::vector<MapTile>>& map);
+    void mapLoaded(const std::vector<std::vector<MapTile>>& map, int levelNumber);
 };
 
 #endif // GAMEMODEL_H

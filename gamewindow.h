@@ -3,6 +3,8 @@
 
 #include "constants.h"
 #include "gamemodel.h"
+#include "machineeditor.h"
+#include "simulation.h"
 
 #include <QMainWindow>
 #include <QTimer>
@@ -22,7 +24,7 @@ public:
     /**
      * @brief changeMap Change the map in the new level
      */
-    void changeMap(std::vector<std::vector<MapTile>>);
+    void changeMap(std::vector<std::vector<MapTile>>, int);
 
 private:
     Ui::GameWindow *ui;
@@ -32,7 +34,12 @@ private:
     int robotY;
     int robotSize;
     bool facingRight;
+    MachineEditor *editor;
     QTimer* robotTimer;
+    std::vector<std::vector<MapTile>> currentMap;
+    std::vector<std::vector<MapTile>> emptyMap;
+    std::vector<ProgramBlock> emptyProgram;
+    // Simulation simu = Simulation(emptyMap, emptyProgram);
 
 private slots:
     /**
@@ -78,6 +85,12 @@ private slots:
      * @brief showEducationalMessage Shows an educational message to the user.
      */
     void showEducationalMessage(QString);
+
+    /**
+     * @brief runTheProgram When the user press get program button on the editor window,
+     *                      get the program from graph, and set it
+     */
+    void runTheProgram(std::vector<ProgramBlock>);
 
 signals:
     void drawWall(int x, int y);
