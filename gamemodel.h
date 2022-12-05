@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include "constants.h"
+#include "simulation.h"
 
 class GameModel : public QObject
 {
@@ -11,6 +12,11 @@ class GameModel : public QObject
 
 public:
     explicit GameModel(int level, QObject *parent = nullptr);
+
+    std::vector<ProgramBlock> program;
+    std::vector<std::vector<MapTile>> map;
+
+    Simulation s = Simulation(map, program);
 
 public slots:
     /**

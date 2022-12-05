@@ -691,7 +691,7 @@ std::vector<ProgramBlock> MachineGraph::getProgram() {
     return std::vector<ProgramBlock>(ProgramBlock::blank);
   }
   qDebug() << program;
-  // emit hereIsProgram(program);
+  emit programData(program);
 
   return program;
 }

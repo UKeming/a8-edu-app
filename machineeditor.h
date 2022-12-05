@@ -36,9 +36,11 @@ private slots:
     void facingBlockButtonPushed();
     void facingCheeseButtonPushed();
     void connectToggled(bool connecting);
+    void emitProgram(std::vector<ProgramBlock>);
+
 signals:
     void changeType(ProgramBlock p);
-    // void hereIsProgram(std::vector<ProgramBlock>);
+    void programData(std::vector<ProgramBlock>);
 };
 
 #endif // MACHINEEDITOR_H

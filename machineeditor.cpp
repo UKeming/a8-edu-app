@@ -46,7 +46,7 @@ MachineEditor::MachineEditor(QWidget *parent)
           &MachineGraph::getProgram);
 
   // Get program from the graph and send it to the game window
-  // connect(graph, &MachineGraph::hereIsProgram, this, &MachineEditor::hereIsProgram);
+  connect(graph, &MachineGraph::programData, this, &MachineEditor::emitProgram);
 
   connect(this, &MachineEditor::changeType, graph, &MachineGraph::setType);
 
@@ -102,3 +102,8 @@ void MachineEditor::connectToggled(bool connecting) {
     ui->connectButton->setText("Connect Blocks");
   }
 }
+
+void MachineEditor::emitProgram(std::vector<ProgramBlock> program){
+    emit programData(program);
+}
+

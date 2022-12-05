@@ -29,6 +29,8 @@ GameWindow::GameWindow(GameModel& model, QWidget *parent) :
     connect(ui->startButton, &QPushButton::clicked, this, &GameWindow::gameStartTest);
     connect(ui->runningButton, &QPushButton::clicked, this, &GameWindow::runningTest);
 
+    editor= new MachineEditor();
+
 
     // Get the game play area coordinate, for robot display
     gameAreaX = ui->gameArea->x();
@@ -37,6 +39,7 @@ GameWindow::GameWindow(GameModel& model, QWidget *parent) :
     // Connect the view to the model
     connect(&model, &GameModel::showEducationalMessage, this, &GameWindow::showEducationalMessage);
     connect(&model, &GameModel::mapLoaded, this, &GameWindow::changeMap);
+
     connect(this, &GameWindow::viewReady, &model, &GameModel::loadLevel);
 
     // When user creates a program
@@ -177,6 +180,5 @@ void GameWindow::runTheProgram(std::vector<ProgramBlock> currentProgram) {
 }
 
 void GameWindow::showProgram() {
-    MachineEditor *editor= new MachineEditor();
     editor->show();
 }

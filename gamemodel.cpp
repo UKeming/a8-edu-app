@@ -13,6 +13,4 @@ void GameModel::loadLevel() {
     emit showEducationalMessage(educationalMessages[currentLevel]);
 }
 
-void GameModel::simulate(std::vector<ProgramBlock> program){
 
-}
