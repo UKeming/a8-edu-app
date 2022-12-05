@@ -38,7 +38,7 @@ private slots:
     void connectToggled(bool connecting);
 signals:
     void changeType(ProgramBlock p);
-    void hereIsProgram(std::vector<ProgramBlock>);
+    // void hereIsProgram(std::vector<ProgramBlock>);
 };
 
 #endif // MACHINEEDITOR_H

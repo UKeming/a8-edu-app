@@ -40,7 +40,7 @@ GameWindow::GameWindow(GameModel& model, QWidget *parent) :
     connect(this, &GameWindow::viewReady, &model, &GameModel::loadLevel);
 
     // When user creates a program
-    connect(editor, &MachineEditor::hereIsProgram, this, &GameWindow::runTheProgram);
+    // connect(editor, &MachineEditor::hereIsProgram, this, &GameWindow::runTheProgram);
 
     connect(ui->programButton, &QPushButton::clicked, this, &GameWindow::showProgram);
 

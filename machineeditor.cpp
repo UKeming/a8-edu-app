@@ -46,7 +46,7 @@ MachineEditor::MachineEditor(QWidget *parent)
           &MachineGraph::getProgram);
 
   // Get program from the graph and send it to the game window
-  connect(graph, &MachineGraph::hereIsProgram, this, &MachineEditor::hereIsProgram);
+  // connect(graph, &MachineGraph::hereIsProgram, this, &MachineEditor::hereIsProgram);
 
   connect(this, &MachineEditor::changeType, graph, &MachineGraph::setType);
 
