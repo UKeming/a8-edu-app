@@ -17,7 +17,8 @@ public:
     ~LevelSelectWindow();
 
 signals:
-    void selectLevel(std::vector<std::vector<MapTile>>);
+    void selectMap(std::vector<std::vector<MapTile>>);
+    void selectLevel(int);
 
 private:
     Ui::LevelSelectWindow *ui;

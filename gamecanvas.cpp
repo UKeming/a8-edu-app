@@ -8,25 +8,40 @@ GameCanvas::GameCanvas(QWidget* parent, std::vector<std::vector<MapTile>> map)
     , map(map)
 {
     this->setMinimumSize(QSize(1000,2000));
+
+    brickSize = 100;
+
+    QPixmap wallMap(":/elements/brickwall.jpg");
+    scaledWallMap = wallMap.scaled(brickSize, brickSize, Qt::KeepAspectRatio);
+
+    QPixmap blockMap(":/elements/block.png");
+    scaledBlockMap = blockMap.scaled(brickSize, brickSize, Qt::KeepAspectRatio);
+
+    QPixmap pitMap(":/elements/pit.png");
+    scaledPitMap = pitMap.scaled(brickSize, brickSize, Qt::KeepAspectRatio);
+
+    rightWaiting = new QMovie(":/elements/robot-idle-right.gif");
+    rightWaiting->setScaledSize(QSize(robotSize, robotSize));
+
+    leftWaiting = new QMovie(":/elements/robot-idle-left.gif");
+    leftWaiting->setScaledSize(QSize(robotSize, robotSize));
+
+    rightRunning = new QMovie(":/elements/robot-run-right.gif");
+    rightRunning->setScaledSize(QSize(robotSize, robotSize));
+
+    leftRunning = new QMovie(":/elements/robot-run-right.gif");
+    leftRunning->setScaledSize(QSize(robotSize, robotSize));
+
+    QPixmap cheeseMap(":/elements/cheese.png");
+    scaledCheeseMap = cheeseMap.scaled(robotSize, robotSize, Qt::KeepAspectRatio);
+
+    groundColor = QColor::fromRgb(222,184,135);
 }
 
 void GameCanvas::paintEvent(QPaintEvent * /* event */)
 {
-    int brickSize = 100;
-
     QPainter painter(this);
     painter.begin(this);
-
-    QPixmap wallMap(":/elements/brickwall.jpg");
-    QPixmap scaledWallMap = wallMap.scaled(brickSize, brickSize, Qt::KeepAspectRatio);
-
-    QPixmap blockMap(":/elements/block.png");
-    QPixmap scaledBlockMap = blockMap.scaled(brickSize, brickSize, Qt::KeepAspectRatio);
-
-    QPixmap pitMap(":/elements/pit.png");
-    QPixmap scaledPitMap = pitMap.scaled(brickSize, brickSize, Qt::KeepAspectRatio);
-
-    QColor groundColor = QColor::fromRgb(222,184,135);
 
     for(unsigned long long y = 0; y < map.size(); y++){
             for(unsigned long long x = 0; x < map[y].size(); x++){
@@ -35,14 +50,14 @@ void GameCanvas::paintEvent(QPaintEvent * /* event */)
                     QPoint pos;
                     pos.setX(x * brickSize);
                     pos.setY(y * brickSize);
-                    emit showRobot(pos);
+                    emit showRobot(pos, robotSize);
                 }
                 if(map[y][x] == cheese){
                     painter.fillRect(x*brickSize, y*brickSize, brickSize, brickSize, groundColor);
                     QPoint pos;
                     pos.setX(x * brickSize);
                     pos.setY(y * brickSize);
-                    emit showCheese(pos);
+                    emit showCheese(scaledCheeseMap, pos, robotSize);
                 }
                 if(map[y][x] == ground){
                     painter.fillRect(x*brickSize, y*brickSize, brickSize, brickSize, groundColor);

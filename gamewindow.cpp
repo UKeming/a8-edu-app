@@ -1,4 +1,5 @@
 #include "gamewindow.h"
+#include "levelselectwindow.h"
 #include "ui_gamewindow.h"
 #include "gamemodel.h"
 #include "gamecanvas.h"
@@ -9,19 +10,22 @@
 #include <QColor>
 #include <QMessageBox>
 
-GameWindow::GameWindow(GameModel& model, QWidget *parent) :
+GameWindow::GameWindow(GameModel& model, LevelSelectWindow *parent) :
     QMainWindow(parent),
     ui(new Ui::GameWindow)
 {
     ui->setupUi(this);
 
-    robotSize = 90;
+    // set robot gif
+//    QMovie *robotmovie = new QMovie(":/elements/robot-idle-right.gif");
+//    robotmovie->setScaledSize(QSize(robotSize, robotSize));
+//    ui->robotLabel->setMovie(robotmovie);
+//    robotmovie->start();
 
-    // set robot git
-    QMovie *robotmovie = new QMovie(":/elements/robot-idle-right.gif");
-    robotmovie->setScaledSize(QSize(robotSize, robotSize));
-    ui->robotLabel->setMovie(robotmovie);
-    robotmovie->start();
+    // change the map when the user select new map
+    connect(parent, &LevelSelectWindow::selectLevel, this, &GameWindow::changeLevel);
+    connect(parent, &LevelSelectWindow::selectMap, this, &GameWindow::changeMap);
+
     // do not show the robot
     ui->robotLabel->setVisible(false);
 
@@ -56,93 +60,8 @@ GameWindow::~GameWindow()
     delete ui;
 }
 
-void GameWindow::refreshRobot()
+void GameWindow::changeLevel(int levelNumber)
 {
-    // QPoint destination = simu.getRobotPos();
-    QPoint destination = QPoint(0,0);
-    if(destination.x() != robotX || destination.y() != robotY)
-    {
-        robotX = destination.x();
-        robotY = destination.y();
-        if(destination.x() >= robotX && !facingRight)
-        {
-            facingRightRunning();
-            facingRight = true;
-        }
-        if(destination.x() < robotX && facingRight)
-        {
-            facingLeftRunning();
-            facingRight = false;
-        }
-        ui->robotLabel->setGeometry(robotX,robotY,robotSize,robotSize);
-    }
-}
-
-void GameWindow::showIdleRobot(QPoint position)
-{
-    robotX = position.x() + gameAreaX;
-    robotY = position.y() + gameAreaY;
-
-    ui->robotLabel->setGeometry(robotX,robotY,robotSize,robotSize);
-    ui->robotLabel->setVisible(true);
-}
-
-void GameWindow::showCheese(QPoint position)
-{
-    int cheeseX = position.x() + gameAreaX;
-    int cheeseY = position.y() + gameAreaY;
-
-    QPixmap cheeseMap(":/elements/cheese.png");
-    QPixmap scaledCheeseMap = cheeseMap.scaled(robotSize, robotSize, Qt::KeepAspectRatio);
-
-    ui->cheese_label->setPixmap(scaledCheeseMap);
-
-    ui->cheese_label->setGeometry(cheeseX,cheeseY,robotSize,robotSize);
-    ui->cheese_label->setVisible(true);
-}
-
-void GameWindow::facingRightWaiting()
-{
-    QMovie *robotmovie = new QMovie(":/elements/robot-idle-right.gif");
-    robotmovie->setScaledSize(QSize(robotSize, robotSize));
-    ui->robotLabel->setMovie(robotmovie);
-    robotmovie->start();
-}
-
-void GameWindow::facingLeftWaiting()
-{
-    QMovie *robotmovie = new QMovie(":/elements/robot-idle-left.gif");
-    robotmovie->setScaledSize(QSize(robotSize, robotSize));
-    ui->robotLabel->setMovie(robotmovie);
-    robotmovie->start();
-}
-
-void GameWindow::facingRightRunning()
-{
-    QMovie *runningRobotmovie = new QMovie(":/elements/robot-run-right.gif");
-    runningRobotmovie->setScaledSize(QSize(robotSize, robotSize));
-    ui->robotLabel->setMovie(runningRobotmovie);
-    runningRobotmovie->start();
-}
-
-void GameWindow::facingLeftRunning()
-{
-    QMovie *runningRobotmovie = new QMovie(":/elements/robot-run-left.gif");
-    runningRobotmovie->setScaledSize(QSize(robotSize, robotSize));
-    ui->robotLabel->setMovie(runningRobotmovie);
-    runningRobotmovie->start();
-}
-
-void GameWindow::changeMap(std::vector<std::vector<MapTile>> map, int levelNumber)
-{
-    // show the map on canvas
-    auto canvas = new GameCanvas(ui->scrollAreaWidgetContents, map);
-
-    currentMap = map;
-    // get the robot and cheese position from the canvas, and set them on the window
-    connect(canvas, &GameCanvas::showRobot, this, &GameWindow::showIdleRobot);
-    connect(canvas, &GameCanvas::showCheese, this, &GameWindow::showCheese);
-
     // show the level number and welcome to the user
     QString num = QString::number(levelNumber);
     QString welcome = "Welcome to";
@@ -155,11 +74,53 @@ void GameWindow::changeMap(std::vector<std::vector<MapTile>> map, int levelNumbe
     ui->levelLabel->setFont(font2);
 }
 
+void GameWindow::showIdleRobot(QPoint position, int size)
+{
+    QMovie* rightWaiting = new QMovie(":/elements/robot-idle-right.gif");
+    rightWaiting->setScaledSize(QSize(size, size));
+    ui->robotLabel->setMovie(rightWaiting);
+    rightWaiting->start();
+
+    int x = position.x() + gameAreaX;
+    int y = position.y() + gameAreaY;
+
+    ui->robotLabel->setGeometry(x,y,size,size);
+    ui->robotLabel->setVisible(true);
+}
+
+void GameWindow::showCheese(QPixmap cheese, QPoint position, int size)
+{
+    int cheeseX = position.x() + gameAreaX;
+    int cheeseY = position.y() + gameAreaY;
+
+    ui->cheese_label->setPixmap(cheese);
+
+    ui->cheese_label->setGeometry(cheeseX,cheeseY,size,size);
+    ui->cheese_label->setVisible(true);
+}
+
+
+void GameWindow::showRobotMovie(QMovie* theMovie){
+    QMovie* rightWaiting = new QMovie(":/elements/robot-idle-right.gif");
+    rightWaiting->setScaledSize(QSize(90, 90));
+    ui->robotLabel->setMovie(rightWaiting);
+    theMovie->start();
+}
+
+void GameWindow::changeMap(std::vector<std::vector<MapTile>> map)
+{
+    // show the map on canvas
+    auto canvas = new GameCanvas(ui->scrollAreaWidgetContents, map);
+
+    // get the robot and cheese position from the canvas, and set them on the window
+    connect(canvas, &GameCanvas::robotMovie, this, &GameWindow::showRobotMovie);
+    connect(canvas, &GameCanvas::showRobot, this, &GameWindow::showIdleRobot);
+    connect(canvas, &GameCanvas::showCheese, this, &GameWindow::showCheese);
+}
+
 void GameWindow::gameStartTest()
 {
-    QPoint robotPosition = QPoint(0, 0);
 
-    showIdleRobot(robotPosition);
 }
 
 void GameWindow::runningTest()
