@@ -2,6 +2,7 @@
 #define GAMEWINDOW_H
 
 #include "constants.h"
+#include "gamecanvas.h"
 #include "gamemodel.h"
 #include "levelselectwindow.h"
 #include "machineeditor.h"
@@ -19,7 +20,7 @@ class GameWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit GameWindow(LevelSelectWindow *parent = nullptr);
+    explicit GameWindow(std::vector<std::vector<MapTile>> map, int levelNumber, LevelSelectWindow *parent = nullptr);
     ~GameWindow();
 
 private:
@@ -28,6 +29,7 @@ private:
     int gameAreaY;
 
     MachineEditor *editor;
+    GameCanvas* canvas;
 
 
 private slots:
@@ -35,11 +37,6 @@ private slots:
      * @brief changeMap Change the map in the new level
      */
     void changeMap(std::vector<std::vector<MapTile>>);
-
-    /**
-     * @brief changeLevel
-     */
-    void changeLevel(int);
 
     /**
      * @brief gameStartTest Test for the elements display
@@ -80,7 +77,6 @@ private slots:
     void runTheProgram(std::vector<ProgramBlock>);
 
 signals:
-    void drawWall(int x, int y);
     void viewReady();
 };
 

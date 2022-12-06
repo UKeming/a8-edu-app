@@ -1,7 +1,6 @@
 #include "gamewindow.h"
 #include "levelselectwindow.h"
 #include "ui_gamewindow.h"
-#include "gamemodel.h"
 #include "gamecanvas.h"
 #include "machineeditor.h"
 #include <QMovie>
@@ -10,15 +9,32 @@
 #include <QColor>
 #include <QMessageBox>
 
-GameWindow::GameWindow(LevelSelectWindow *parent) :
+GameWindow::GameWindow(std::vector<std::vector<MapTile>> map, int levelNumber, LevelSelectWindow *parent) :
     QMainWindow(parent),
     ui(new Ui::GameWindow)
 {
     ui->setupUi(this);
 
+    // show the map on canvas
+    canvas = new GameCanvas(ui->scrollAreaWidgetContents, map);
+    // get the robot and cheese position from the canvas, and set them on the window
+    connect(canvas, &GameCanvas::robotMovie, this, &GameWindow::showRobotMovie);
+    connect(canvas, &GameCanvas::showRobot, this, &GameWindow::showIdleRobot);
+    connect(canvas, &GameCanvas::showCheese, this, &GameWindow::showCheese);
+    // show the level number and welcome to the user
+    QString num = QString::number(levelNumber);
+    QString welcome = "Welcome to";
+    QString levelNum = "Level " + num + "!";
+    QFont font1("woshishabi", 32, QFont::Bold);
+    QFont font2("woshishabi", 48, QFont::Bold);
+    ui->welcomeLabel->setText(welcome);
+    ui->welcomeLabel->setFont(font1);
+    ui->levelLabel->setText(levelNum);
+    ui->levelLabel->setFont(font2);
+
     // change the map when the user select new map
-    connect(parent, &LevelSelectWindow::selectLevel, this, &GameWindow::changeLevel);
-    connect(parent, &LevelSelectWindow::selectMap, this, &GameWindow::changeMap);
+//    connect(parent, &LevelSelectWindow::selectLevel, this, &GameWindow::changeLevel);
+//    connect(parent, &LevelSelectWindow::selectMap, this, &GameWindow::changeMap);
 
     // do not show the robot
     ui->robotLabel->setVisible(false);
@@ -28,7 +44,6 @@ GameWindow::GameWindow(LevelSelectWindow *parent) :
     connect(ui->runningButton, &QPushButton::clicked, this, &GameWindow::runningTest);
 
     editor= new MachineEditor();
-
 
     // Get the game play area coordinate, for robot display
     gameAreaX = ui->gameArea->x();
@@ -52,20 +67,6 @@ GameWindow::GameWindow(LevelSelectWindow *parent) :
 GameWindow::~GameWindow()
 {
     delete ui;
-}
-
-void GameWindow::changeLevel(int levelNumber)
-{
-    // show the level number and welcome to the user
-    QString num = QString::number(levelNumber);
-    QString welcome = "Welcome to";
-    QString levelNum = "Level " + num + "!";
-    QFont font1("woshishabi", 32, QFont::Bold);
-    QFont font2("woshishabi", 48, QFont::Bold);
-    ui->welcomeLabel->setText(welcome);
-    ui->welcomeLabel->setFont(font1);
-    ui->levelLabel->setText(levelNum);
-    ui->levelLabel->setFont(font2);
 }
 
 void GameWindow::showIdleRobot(QPoint position, int size)
