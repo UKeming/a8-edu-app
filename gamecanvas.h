@@ -5,10 +5,13 @@
 #include "constants.h"
 #include "qmovie.h"
 #include <QWidget>
+#include <QPainter>
 
 
 class GameCanvas : public QWidget {
     Q_OBJECT
+    QPainter painter;
+
 public:
     explicit GameCanvas(QWidget* parent, std::vector<std::vector<MapTile>> map);
 
