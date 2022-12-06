@@ -10,7 +10,7 @@
 #include <QColor>
 #include <QMessageBox>
 
-GameWindow::GameWindow(GameModel& model, LevelSelectWindow *parent) :
+GameWindow::GameWindow(LevelSelectWindow *parent) :
     QMainWindow(parent),
     ui(new Ui::GameWindow)
 {
@@ -34,11 +34,11 @@ GameWindow::GameWindow(GameModel& model, LevelSelectWindow *parent) :
     gameAreaX = ui->gameArea->x();
     gameAreaY = ui->gameArea->y();
 
-    // Connect the view to the model
-    connect(&model, &GameModel::showEducationalMessage, this, &GameWindow::showEducationalMessage);
-    connect(&model, &GameModel::mapLoaded, this, &GameWindow::changeMap);
+//    // Connect the view to the model
+//    connect(&model, &GameModel::showEducationalMessage, this, &GameWindow::showEducationalMessage);
+//    connect(&model, &GameModel::mapLoaded, this, &GameWindow::changeMap);
 
-    connect(this, &GameWindow::viewReady, &model, &GameModel::loadLevel);
+//    connect(this, &GameWindow::viewReady, &model, &GameModel::loadLevel);
 
     // When user creates a program
     connect(editor, &MachineEditor::programData, this, &GameWindow::runTheProgram);
@@ -124,7 +124,6 @@ void GameWindow::showEducationalMessage(QString message) {
 }
 
 void GameWindow::runTheProgram(std::vector<ProgramBlock> currentProgram) {
-    emit
 }
 
 void GameWindow::showProgram() {

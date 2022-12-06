@@ -19,7 +19,7 @@ class GameWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit GameWindow(GameModel& model, LevelSelectWindow *parent = nullptr);
+    explicit GameWindow(LevelSelectWindow *parent = nullptr);
     ~GameWindow();
 
 private:
