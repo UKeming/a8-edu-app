@@ -10,7 +10,6 @@ class GameCanvas : public QWidget {
     Q_OBJECT
 public:
     explicit GameCanvas(QWidget* parent, std::vector<std::vector<MapTile>> map);
-    std::vector<std::vector<MapTile>> map;
 
 private:
 
@@ -34,6 +33,9 @@ private:
     // cheese icon
     QPixmap scaledCheeseMap;
 
+    // current map
+    std::vector<std::vector<MapTile>> map;
+
     int brickSize;
 
 public slots:
@@ -44,7 +46,7 @@ protected:
 signals:
     void robotMovie(QMovie*);
     void showRobot(QPoint, int);
-    void showCheese(QPixmap, QPoint, int);
+    void showCheese(QPoint, int);
 };
 
 #endif // GAMECANVAS_H

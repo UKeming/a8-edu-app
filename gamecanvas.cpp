@@ -11,6 +11,8 @@ GameCanvas::GameCanvas(QWidget* parent, std::vector<std::vector<MapTile>> map)
 
     brickSize = 100;
 
+    robotSize = 90;
+
     QPixmap wallMap(":/elements/brickwall.jpg");
     scaledWallMap = wallMap.scaled(brickSize, brickSize, Qt::KeepAspectRatio);
 
@@ -50,6 +52,7 @@ void GameCanvas::paintEvent(QPaintEvent * /* event */)
                     QPoint pos;
                     pos.setX(x * brickSize);
                     pos.setY(y * brickSize);
+                    emit robotMovie(rightWaiting);
                     emit showRobot(pos, robotSize);
                 }
                 if(map[y][x] == cheese){
@@ -57,7 +60,7 @@ void GameCanvas::paintEvent(QPaintEvent * /* event */)
                     QPoint pos;
                     pos.setX(x * brickSize);
                     pos.setY(y * brickSize);
-                    emit showCheese(scaledCheeseMap, pos, robotSize);
+                    emit showCheese(pos, robotSize);
                 }
                 if(map[y][x] == ground){
                     painter.fillRect(x*brickSize, y*brickSize, brickSize, brickSize, groundColor);

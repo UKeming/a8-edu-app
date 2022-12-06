@@ -59,7 +59,7 @@ private slots:
     /**
      * @brief showCheese Show the cheese
      */
-    void showCheese(QPixmap, QPoint, int size);
+    void showCheese(QPoint, int size);
 
     void showProgram();
 

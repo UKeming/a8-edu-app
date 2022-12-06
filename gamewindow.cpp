@@ -16,12 +16,6 @@ GameWindow::GameWindow(GameModel& model, LevelSelectWindow *parent) :
 {
     ui->setupUi(this);
 
-    // set robot gif
-//    QMovie *robotmovie = new QMovie(":/elements/robot-idle-right.gif");
-//    robotmovie->setScaledSize(QSize(robotSize, robotSize));
-//    ui->robotLabel->setMovie(robotmovie);
-//    robotmovie->start();
-
     // change the map when the user select new map
     connect(parent, &LevelSelectWindow::selectLevel, this, &GameWindow::changeLevel);
     connect(parent, &LevelSelectWindow::selectMap, this, &GameWindow::changeMap);
@@ -47,7 +41,7 @@ GameWindow::GameWindow(GameModel& model, LevelSelectWindow *parent) :
     connect(this, &GameWindow::viewReady, &model, &GameModel::loadLevel);
 
     // When user creates a program
-    // connect(editor, &MachineEditor::hereIsProgram, this, &GameWindow::runTheProgram);
+    connect(editor, &MachineEditor::programData, this, &GameWindow::runTheProgram);
 
     connect(ui->programButton, &QPushButton::clicked, this, &GameWindow::showProgram);
 
@@ -76,11 +70,6 @@ void GameWindow::changeLevel(int levelNumber)
 
 void GameWindow::showIdleRobot(QPoint position, int size)
 {
-    QMovie* rightWaiting = new QMovie(":/elements/robot-idle-right.gif");
-    rightWaiting->setScaledSize(QSize(size, size));
-    ui->robotLabel->setMovie(rightWaiting);
-    rightWaiting->start();
-
     int x = position.x() + gameAreaX;
     int y = position.y() + gameAreaY;
 
@@ -88,12 +77,15 @@ void GameWindow::showIdleRobot(QPoint position, int size)
     ui->robotLabel->setVisible(true);
 }
 
-void GameWindow::showCheese(QPixmap cheese, QPoint position, int size)
+void GameWindow::showCheese(QPoint position, int size)
 {
     int cheeseX = position.x() + gameAreaX;
     int cheeseY = position.y() + gameAreaY;
 
-    ui->cheese_label->setPixmap(cheese);
+    QPixmap cheeseMap(":/elements/cheese.png");
+    QPixmap scaledCheeseMap = cheeseMap.scaled(size, size, Qt::KeepAspectRatio);
+
+    ui->cheese_label->setPixmap(scaledCheeseMap);
 
     ui->cheese_label->setGeometry(cheeseX,cheeseY,size,size);
     ui->cheese_label->setVisible(true);
@@ -101,9 +93,7 @@ void GameWindow::showCheese(QPixmap cheese, QPoint position, int size)
 
 
 void GameWindow::showRobotMovie(QMovie* theMovie){
-    QMovie* rightWaiting = new QMovie(":/elements/robot-idle-right.gif");
-    rightWaiting->setScaledSize(QSize(90, 90));
-    ui->robotLabel->setMovie(rightWaiting);
+    ui->robotLabel->setMovie(theMovie);
     theMovie->start();
 }
 
@@ -134,10 +124,7 @@ void GameWindow::showEducationalMessage(QString message) {
 }
 
 void GameWindow::runTheProgram(std::vector<ProgramBlock> currentProgram) {
-    // simu = Simulation(currentMap, currentProgram);
-//    QTimer* runningTimer = new QTimer();
-//    runningTimer->setInterval(25);
-//    connect(runningTimer, &QTimer::timeout, this, &GameWindow::refreshRobot);
+    emit
 }
 
 void GameWindow::showProgram() {
