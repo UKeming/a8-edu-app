@@ -131,31 +131,31 @@ const std::vector<std::vector<MapTile>> levels[] = {
 
 const auto educationalMessages = std::vector<QString>{
         //Level 1
-        "Welcome! Lorem ipsum dolor sit amet",
+        "Welcome!\n\nThe mice need your help.\nThey've built and designed a new robot to make cheese collection quick and efficient. But, without programming, the robot can't do anything!\n\nWill you write a program to help the robot reach the cheese? Just moving forward a few times should be a good way to start.",
 
         //Level 2
-        "Lorem ipsum dolor sit amet",
+        "The robot's small size allows it to go around corners and reach areas the mice can't reach on their own.\n\nCan you write a program to help the robot reach the cheese without bumping into any walls?",
 
         //Level 3
-        "Lorem ipsum dolor sit amet",
+        "The robot is even strong enough to move obstacles to access new cheese! Help move the crate and get to the cheese",
 
         //Level 4
-        "Lorem ipsum dolor sit amet",
+        "Some journeys are a little long for this robot, but thanks to your excellent programming, it can make it.\n\nSometimes in programming it is helpful to use a loop, so you don't have to put the same thing over and over again. Try using the robot's sensors with a 'while' block this time to get to the cheese. Something like 'while not facing wall' might do the trick! Don't forget an 'end while' block.",
 
         //Level 5
-        "Lorem ipsum dolor sit amet",
+        "Programming makes all sorts of tedious tasks easier. The mice are sure grateful for your help collecting cheese! This next piece of cheese is down a long winding corridor.\n\nYou might need to try using an 'if' block for this one. Note that every 'if' block needs an 'end' block as well.",
 
         //Level 6
-        "Lorem ipsum dolor sit amet",
+        "Now that you've proven your programming prowess, the mice would like you to put your skills to the test. You're now ready to take the robot through a dangerous course now, full of pits! Whatever you do, don't let the robot fall in! Thankfully the robot is equipped with a pit sensor, so you should be able to write a program that safely avoids all the pits!",
 
         //Level 7
-        "Lorem ipsum dolor sit amet",
+        "Could you give this one a try using some while loops? Just don't push the crate too far, or the robot won't be able to reach the cheese!",
 
         //Level 8
-        "Lorem ipsum dolor sit amet",
+        "The mice would love to reach this cheese, but they're worried it isn't possible. Will you give it a go?",
 
         //Level 9
-        "",
+        "You're getting the hang of this! Great job! See how few blocks you can use to help the robot reach the cheese!",
 };
 
 #endif // CONSTANTS_H
