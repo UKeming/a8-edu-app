@@ -56,7 +56,7 @@ GameWindow::GameWindow(std::vector<std::vector<MapTile>> map, int levelNumber, L
 //    connect(this, &GameWindow::viewReady, &model, &GameModel::loadLevel);
 
     // When user creates a program
-    connect(editor, &MachineEditor::programData, this, &GameWindow::runTheProgram);
+    connect(editor, &MachineEditor::programData, canvas, &GameCanvas::simulate);
 
     connect(ui->programButton, &QPushButton::clicked, this, &GameWindow::showProgram);
 
@@ -124,8 +124,6 @@ void GameWindow::showEducationalMessage(QString message) {
     QMessageBox::information(this, "About This Level", message);
 }
 
-void GameWindow::runTheProgram(std::vector<ProgramBlock> currentProgram) {
-}
 
 void GameWindow::showProgram() {
     editor->show();

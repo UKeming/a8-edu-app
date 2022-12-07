@@ -297,3 +297,11 @@ void Simulation::printGameState() {
     }
     qDebug() << mapString.c_str();
 }
+
+std::vector<std::vector<MapTile>> Simulation::getMap(){
+    QPoint pos= this->getCheesePos();
+    std::vector<std::vector<MapTile>> newMap = map;
+    newMap[pos.y()][pos.x()] = MapTile::cheese;
+    return newMap;
+}
+

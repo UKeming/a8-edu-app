@@ -70,11 +70,6 @@ private slots:
      */
     void showEducationalMessage(QString);
 
-    /**
-     * @brief runTheProgram When the user press get program button on the editor window,
-     *                      get the program from graph, and set it
-     */
-    void runTheProgram(std::vector<ProgramBlock>);
 
 signals:
     void viewReady();

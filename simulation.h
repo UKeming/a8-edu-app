@@ -32,14 +32,14 @@ public:
     QPoint getCheesePos();
     int getCurrentBlock();
     void printGameState();
+    std::vector<std::vector<MapTile>> getMap();
+
 private:
     void setLost();
     bool checkInBounds(QPoint);
     bool checkCondition(bool, ProgramBlock);
     QPoint getFacingPoint(int offset = 1);
 
-signals:
-    void mapData(std::vector<std::vector<MapTile>>);
 
 };
 

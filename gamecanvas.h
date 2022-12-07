@@ -1,6 +1,7 @@
 #ifndef GAMECANVAS_H
 #define GAMECANVAS_H
 
+#include "simulation.h"
 #include "constants.h"
 #include "qmovie.h"
 #include <QWidget>
@@ -12,7 +13,7 @@ public:
     explicit GameCanvas(QWidget* parent, std::vector<std::vector<MapTile>> map);
 
 private:
-
+    Simulation *s;
     // varibles for drawing the map
     QPixmap scaledWallMap;
     QPixmap scaledBlockMap;
@@ -25,6 +26,7 @@ private:
     int robotSize;
 
     // robot movies
+    QTimer * timer;
     QMovie* rightWaiting;
     QMovie* leftWaiting;
     QMovie* rightRunning;
@@ -39,6 +41,12 @@ private:
     int brickSize;
 
 public slots:
+    void setMap(std::vector<std::vector<MapTile>> map);
+    void simulate(std::vector<ProgramBlock> program);
+    void step();
+    void run(int interval);
+    void stop();
+
 
 protected:
     void paintEvent(QPaintEvent *event) override;

@@ -25,7 +25,7 @@ LevelSelectWindow::~LevelSelectWindow()
 
 void LevelSelectWindow::openLevel(const QModelIndex& level) {
     int selectedLevel = level.row();
-    GameModel model(selectedLevel);
+//    GameModel model(selectedLevel);
     GameWindow* window = new GameWindow(levels[selectedLevel], selectedLevel, this);
 //    emit selectMap(levels[selectedLevel]);
 //    emit selectLevel(selectedLevel);
