@@ -305,3 +305,11 @@ std::vector<std::vector<MapTile>> Simulation::getMap(){
     return newMap;
 }
 
+direction Simulation::getRobotDirection(){
+    return robotDirection;
+}
+
+enum gameState Simulation::getGameState(){
+    return gameState;
+}
+

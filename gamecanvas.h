@@ -24,11 +24,14 @@ private:
     int robotX;
     int robotY;
     int robotSize;
+    direction preDir;
 
     // robot movies
     QTimer * timer;
     QMovie* rightWaiting;
     QMovie* leftWaiting;
+    QMovie* upWaiting;
+    QMovie* downWaiting;
     QMovie* rightRunning;
     QMovie* leftRunning;
 
@@ -55,6 +58,8 @@ signals:
     void robotMovie(QMovie*);
     void showRobot(QPoint, int);
     void showCheese(QPoint, int);
+    void gameLost();
+    void restartGame();
 };
 
 #endif // GAMECANVAS_H

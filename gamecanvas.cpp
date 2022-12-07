@@ -10,8 +10,8 @@ GameCanvas::GameCanvas(QWidget *parent, std::vector<std::vector<MapTile>> map)
     this->setMinimumSize(QSize(1000, 2000));
 
     brickSize = 100;
-
     robotSize = 90;
+    preDir = east;
 
     QPixmap wallMap(":/elements/brickwall.jpg");
     scaledWallMap = wallMap.scaled(brickSize, brickSize, Qt::KeepAspectRatio);
@@ -24,9 +24,12 @@ GameCanvas::GameCanvas(QWidget *parent, std::vector<std::vector<MapTile>> map)
 
     rightWaiting = new QMovie(":/elements/robot-idle-right.gif");
     rightWaiting->setScaledSize(QSize(robotSize, robotSize));
-
     leftWaiting = new QMovie(":/elements/robot-idle-left.gif");
     leftWaiting->setScaledSize(QSize(robotSize, robotSize));
+    upWaiting = new QMovie(":/elements/robot-idle-up.gif");
+    upWaiting->setScaledSize(QSize(robotSize, robotSize));
+    downWaiting = new QMovie(":/elements/robot-idle-down.gif");
+    downWaiting->setScaledSize(QSize(robotSize, robotSize));
 
     rightRunning = new QMovie(":/elements/robot-run-right.gif");
     rightRunning->setScaledSize(QSize(robotSize, robotSize));
@@ -96,6 +99,7 @@ void GameCanvas::setMap(std::vector<std::vector<MapTile>> map) {
 void GameCanvas::simulate(std::vector<ProgramBlock> program) {
     stop();
     s = new Simulation(map, program);
+    emit restartGame();
     run(1000);
 }
 
@@ -103,7 +107,33 @@ void GameCanvas::step() {
     s->step();
     s->printGameState();
     emit showRobot(s->getRobotPos() * brickSize, robotSize);
+    direction currentDir = s->getRobotDirection();
+    if (preDir != currentDir) {
+        switch (currentDir) {
+        case north:
+            emit robotMovie(upWaiting);
+            preDir = north;
+            break;
+        case south:
+            emit robotMovie(downWaiting);
+            preDir = south;
+            break;
+        case east:
+            emit robotMovie(rightWaiting);
+            preDir = east;
+            break;
+        case west:
+            emit robotMovie(leftWaiting);
+            preDir = west;
+            break;
+        }
+    }
     setMap(s->getMap());
+
+    if(s->getGameState() == lost){
+        emit gameLost();
+        stop();
+    }
 }
 
 void GameCanvas::run(int interval) { timer->start(interval); }

@@ -70,6 +70,16 @@ private slots:
      */
     void showEducationalMessage(QString);
 
+    /**
+     * @brief hideRobot hide the robot if lost the game
+     */
+    void lost();
+
+    /**
+     * @brief restart When the user creat a new program and try again
+     */
+    void restart();
+
 
 signals:
     void viewReady();

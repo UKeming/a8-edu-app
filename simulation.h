@@ -30,6 +30,8 @@ public:
 
     QPoint getRobotPos();
     QPoint getCheesePos();
+    direction getRobotDirection();
+    enum gameState getGameState();
     int getCurrentBlock();
     void printGameState();
     std::vector<std::vector<MapTile>> getMap();

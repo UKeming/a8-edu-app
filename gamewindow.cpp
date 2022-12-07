@@ -21,8 +21,10 @@ GameWindow::GameWindow(std::vector<std::vector<MapTile>> map, int levelNumber, L
     connect(canvas, &GameCanvas::robotMovie, this, &GameWindow::showRobotMovie);
     connect(canvas, &GameCanvas::showRobot, this, &GameWindow::showIdleRobot);
     connect(canvas, &GameCanvas::showCheese, this, &GameWindow::showCheese);
+    connect(canvas, &GameCanvas::gameLost, this, &GameWindow::lost);
+    connect(canvas, &GameCanvas::restartGame, this, &GameWindow::restart);
     // show the level number and welcome to the user
-    QString num = QString::number(levelNumber);
+    QString num = QString::number(levelNumber + 1);
     QString welcome = "Welcome to";
     QString levelNum = "Level " + num + "!";
     QFont font1("woshishabi", 32, QFont::Bold);
@@ -127,4 +129,16 @@ void GameWindow::showEducationalMessage(QString message) {
 
 void GameWindow::showProgram() {
     editor->show();
+}
+
+void GameWindow::lost(){
+    QString lost = "You lost in";
+    ui->welcomeLabel->setText(lost);
+    QPoint respawn = QPoint(0,0);
+    showIdleRobot(respawn, 90);
+}
+
+void GameWindow::restart(){
+    QString restart = "Welcome to";
+    ui->welcomeLabel->setText(restart);
 }

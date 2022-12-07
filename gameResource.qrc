@@ -10,5 +10,7 @@
         <file>cheese.jpg</file>
         <file>cheese.png</file>
         <file>pit.png</file>
+        <file>robot-idle-down.gif</file>
+        <file>robot-idle-up.gif</file>
     </qresource>
 </RCC>
