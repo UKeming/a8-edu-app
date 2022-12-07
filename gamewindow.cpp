@@ -23,6 +23,7 @@ GameWindow::GameWindow(std::vector<std::vector<MapTile>> map, int levelNumber, L
     connect(canvas, &GameCanvas::showCheese, this, &GameWindow::showCheese);
     connect(canvas, &GameCanvas::gameLost, this, &GameWindow::lost);
     connect(canvas, &GameCanvas::restartGame, this, &GameWindow::restart);
+    connect(canvas, &GameCanvas::gameWon, this, &GameWindow::gameWon);
     // show the level number and welcome to the user
     QString num = QString::number(levelNumber + 1);
     QString welcome = "Welcome to";
@@ -141,4 +142,8 @@ void GameWindow::lost(){
 void GameWindow::restart(){
     QString restart = "Welcome to";
     ui->welcomeLabel->setText(restart);
+}
+
+void GameWindow::gameWon(){
+
 }

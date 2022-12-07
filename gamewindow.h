@@ -80,6 +80,11 @@ private slots:
      */
     void restart();
 
+    /**
+     * @brief gameWon When the player won in one level
+     */
+    void gameWon();
+
 
 signals:
     void viewReady();

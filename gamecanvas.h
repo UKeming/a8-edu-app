@@ -59,6 +59,7 @@ signals:
     void showRobot(QPoint, int);
     void showCheese(QPoint, int);
     void gameLost();
+    void gameWon();
     void restartGame();
 };
 

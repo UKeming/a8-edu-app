@@ -134,6 +134,10 @@ void GameCanvas::step() {
         emit gameLost();
         stop();
     }
+    if(s->getGameState() == won){
+        emit gameWon();
+        stop();
+    }
 }
 
 void GameCanvas::run(int interval) { timer->start(interval); }
