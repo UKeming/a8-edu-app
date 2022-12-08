@@ -108,6 +108,7 @@ void GameCanvas::step() {
     s->step();
     s->printGameState();
     if(s->getGameState() == lost){
+        emit robotMovie(rightWaiting);
         emit gameLost();
         stop();
         return;
