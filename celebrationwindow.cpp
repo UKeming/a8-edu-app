@@ -1,4 +1,5 @@
 #include "celebrationwindow.h"
+#include "gamewindow.h"
 #include "ui_celebrationwindow.h"
 #include "levelselectwindow.h"
 #include <Box2D/Box2D.h>
@@ -7,12 +8,13 @@
 #include <QPaintEvent>
 #include <QRandomGenerator>
 
-CelebrationWindow::CelebrationWindow(QWidget *parent) :
+CelebrationWindow::CelebrationWindow(int nextLevelIndex, QWidget *parent) :
     QMainWindow(parent)
   , ui(new Ui::CelebrationWindow)
   , physicsWorld(b2World(b2Vec2(0.0f, 0.0f)))
   , timer(QTimer(this))
   , painter(QPainter(this))
+  , nextLevelIndex(nextLevelIndex)
 {
     ui->setupUi(this);
 
@@ -78,6 +80,7 @@ CelebrationWindow::CelebrationWindow(QWidget *parent) :
     ui->centralwidget->setBodies(&confettiBodies);
 
     connect(ui->mainMenuButton, &QPushButton::pressed, this, &CelebrationWindow::showMainMenu);
+    connect(ui->nextLevelButton, &QPushButton::pressed, this, &CelebrationWindow::nextLevel);
 
     connect(&timer, &QTimer::timeout, this, &CelebrationWindow::updatePhysics);
     timer.setInterval(10);
@@ -92,6 +95,12 @@ CelebrationWindow::~CelebrationWindow()
 void CelebrationWindow::showMainMenu() {
     LevelSelectWindow* mainMenu = new LevelSelectWindow();
     mainMenu->show();
+    this->close();
+}
+
+void CelebrationWindow::nextLevel() {
+    GameWindow* window = new GameWindow(levels[nextLevelIndex], nextLevelIndex, this);
+    window->show();
     this->close();
 }
 

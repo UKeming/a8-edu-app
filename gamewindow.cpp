@@ -1,5 +1,5 @@
 #include "gamewindow.h"
-#include "levelselectwindow.h"
+#include "celebrationwindow.h"
 #include "ui_gamewindow.h"
 #include "gamecanvas.h"
 #include "machinegraph.h"
@@ -8,10 +8,12 @@
 #include <QPainter>
 #include <QColor>
 #include <QMessageBox>
+#include <QTimer>
 
-GameWindow::GameWindow(std::vector<std::vector<MapTile>> map, int levelNumber, LevelSelectWindow *parent) :
+GameWindow::GameWindow(std::vector<std::vector<MapTile>> map, int levelNumber, QMainWindow *parent) :
     QMainWindow(parent),
-    ui(new Ui::GameWindow)
+    ui(new Ui::GameWindow),
+    levelNumber(levelNumber)
 {
     ui->setupUi(this);
 
@@ -52,7 +54,7 @@ GameWindow::GameWindow(std::vector<std::vector<MapTile>> map, int levelNumber, L
 //    connect(&model, &GameModel::showEducationalMessage, this, &GameWindow::showEducationalMessage);
 //    connect(&model, &GameModel::mapLoaded, this, &GameWindow::changeMap);
 
-//    connect(this, &GameWindow::viewReady, &model, &GameModel::loadLevel);
+    QTimer::singleShot(2000, this, &GameWindow::showEducationalMessage);
 
 
     // Connects program pannel.
@@ -161,9 +163,8 @@ void GameWindow::runningTest()
 
 }
 
-void GameWindow::showEducationalMessage(QString message) {
-    qDebug() << "Message: " << message;
-    QMessageBox::information(this, "About This Level", message);
+void GameWindow::showEducationalMessage() {
+    QMessageBox::information(this, "About This Level", educationalMessages[levelNumber]);
 }
 
 
@@ -184,7 +185,10 @@ void GameWindow::restart(){
 }
 
 void GameWindow::gameWon(){
-
+    auto celebrationWindow = new CelebrationWindow(levelNumber + 1);
+    celebrationWindow->show();
+    this->hide();
+//    this->close();
 }
 
 void GameWindow::ifButtonPushed() {
