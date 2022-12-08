@@ -22,13 +22,13 @@ GameCanvas::GameCanvas(QWidget *parent, std::vector<std::vector<MapTile>> map)
     QPixmap pitMap(":/elements/pit.png");
     scaledPitMap = pitMap.scaled(brickSize, brickSize, Qt::KeepAspectRatio);
 
-    rightWaiting = new QMovie(":/elements/robot-idle-right.gif");
+    rightWaiting = new QMovie(":/elements/robot-right.gif");
     rightWaiting->setScaledSize(QSize(robotSize, robotSize));
-    leftWaiting = new QMovie(":/elements/robot-idle-left.gif");
+    leftWaiting = new QMovie(":/elements/robot-left.gif");
     leftWaiting->setScaledSize(QSize(robotSize, robotSize));
-    upWaiting = new QMovie(":/elements/robot-idle-up.gif");
+    upWaiting = new QMovie(":/elements/robot-up.gif");
     upWaiting->setScaledSize(QSize(robotSize, robotSize));
-    downWaiting = new QMovie(":/elements/robot-idle-down.gif");
+    downWaiting = new QMovie(":/elements/robot-down.gif");
     downWaiting->setScaledSize(QSize(robotSize, robotSize));
 
     rightRunning = new QMovie(":/elements/robot-run-right.gif");

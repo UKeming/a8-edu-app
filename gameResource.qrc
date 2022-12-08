@@ -12,5 +12,9 @@
         <file>pit.png</file>
         <file>robot-idle-down.gif</file>
         <file>robot-idle-up.gif</file>
+        <file>robot-down.gif</file>
+        <file>robot-left.gif</file>
+        <file>robot-right.gif</file>
+        <file>robot-up.gif</file>
     </qresource>
 </RCC>
