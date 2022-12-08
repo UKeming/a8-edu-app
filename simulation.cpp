@@ -6,8 +6,8 @@
 #include <string>
 #include <vector>
 Simulation::Simulation(std::vector<std::vector<MapTile>> newMap,
-                       std::vector<ProgramBlock> newProgram)
-    : map(newMap), gameState(notEnded), robotDirection(east),
+                       std::vector<ProgramBlock> newProgram, QObject *parent)
+    : QObject(parent), map(newMap), gameState(notEnded), robotDirection(east),
       program(newProgram) {
     height = map.size();
     width = map[0].size();
@@ -54,6 +54,7 @@ void Simulation::step() {
         return;
     tickCount++;
     currentBlock++;
+    emit runningBlock(currentBlock);
     if (currentBlock == (int)program.size()) {
         setLost();
         return;
@@ -184,6 +185,7 @@ void Simulation::step() {
 void Simulation::setLost() {
     gameState = lost;
     robotPos = QPoint(-1, -1);
+    emit runningBlock(-1);
 }
 
 QPoint Simulation::getFacingPoint(int offset) {

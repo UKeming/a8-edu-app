@@ -49,7 +49,7 @@ public slots:
     void step();
     void run(int interval);
     void stop();
-
+    void emitRunningBlock(int block);
 
 protected:
     void paintEvent(QPaintEvent *event) override;
@@ -61,6 +61,7 @@ signals:
     void gameLost();
     void gameWon();
     void restartGame();
+    void currentBlock(int);
 };
 
 #endif // GAMECANVAS_H

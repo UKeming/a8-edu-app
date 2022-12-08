@@ -2,7 +2,7 @@
 #include "levelselectwindow.h"
 #include "ui_gamewindow.h"
 #include "gamecanvas.h"
-#include "machineeditor.h"
+#include "machinegraph.h"
 #include <QMovie>
 #include <QHBoxLayout>
 #include <QPainter>
@@ -42,10 +42,6 @@ GameWindow::GameWindow(std::vector<std::vector<MapTile>> map, int levelNumber, L
     // do not show the robot
     ui->robotLabel->setVisible(false);
 
-    // Just for test, remove in final version
-    connect(ui->startButton, &QPushButton::clicked, this, &GameWindow::gameStartTest);
-    connect(ui->runningButton, &QPushButton::clicked, this, &GameWindow::runningTest);
-
     editor= new MachineEditor();
 
     // Get the game play area coordinate, for robot display
@@ -58,10 +54,53 @@ GameWindow::GameWindow(std::vector<std::vector<MapTile>> map, int levelNumber, L
 
 //    connect(this, &GameWindow::viewReady, &model, &GameModel::loadLevel);
 
-    // When user creates a program
-    connect(editor, &MachineEditor::programData, canvas, &GameCanvas::simulate);
 
-    connect(ui->programButton, &QPushButton::clicked, this, &GameWindow::showProgram);
+    // Connects program pannel.
+    MachineGraph *graph = new MachineGraph();
+    ui->mainLayout->insertWidget(0, graph);
+    connect(ui->connectButton, &QPushButton::clicked, graph,
+            &MachineGraph::toggleConnecting);
+    connect(ui->resetBegin, &QPushButton::clicked, graph,
+            &MachineGraph::resetBegin);
+
+    connect(graph, &MachineGraph::connectToggled, this,
+            &GameWindow::connectToggled);
+
+    connect(ui->ifButton, &QPushButton::clicked, this,
+            &GameWindow::ifButtonPushed);
+    connect(ui->facingWallButton, &QPushButton::clicked, this,
+            &GameWindow::facingWallButtonPushed);
+    connect(ui->notButton, &QPushButton::clicked, this,
+            &GameWindow::notButtonPushed);
+    connect(ui->moveForward, &QPushButton::clicked, this,
+            &GameWindow::moveForwardButtonPushed);
+    connect(ui->turnLeftButton, &QPushButton::clicked, this,
+            &GameWindow::turnLeftButtonPushed);
+    connect(ui->turnRightButton, &QPushButton::clicked, this,
+            &GameWindow::turnRightButtonPushed);
+    connect(ui->facingPitButton, &QPushButton::clicked, this,
+            &GameWindow::facingPitButtonPushed);
+    connect(ui->eatCheeseButton, &QPushButton::clicked, this,
+            &GameWindow::eatCheeseButtonPushed);
+    connect(ui->endWhileButton, &QPushButton::clicked, this,
+            &GameWindow::endWhileButtonPushed);
+    connect(ui->endIfButton, &QPushButton::clicked, this,
+            &GameWindow::endIfButtonPushed);
+    connect(ui->whileButton, &QPushButton::clicked, this,
+            &GameWindow::whilePushed);
+    connect(ui->facingBlock, &QPushButton::clicked, this,
+            &GameWindow::facingBlockButtonPushed);
+    connect(ui->facingCheese, &QPushButton::clicked, this,
+            &GameWindow::facingCheeseButtonPushed);
+
+    connect(ui->getOutput, &QPushButton::clicked, graph,
+            &MachineGraph::getProgram);
+
+    // Get program from the graph and send it to the game window
+    connect(graph, &MachineGraph::programData,canvas, &GameCanvas::simulate);
+    connect(this, &GameWindow::changeType, graph, &MachineGraph::setType);
+    connect(canvas, &GameCanvas::currentBlock, graph, &MachineGraph::setRunningBlock);
+
 
 
     emit viewReady();
@@ -147,3 +186,53 @@ void GameWindow::restart(){
 void GameWindow::gameWon(){
 
 }
+
+void GameWindow::ifButtonPushed() {
+  emit changeType(ProgramBlock::ifStatement);
+}
+void GameWindow::facingWallButtonPushed() {
+  emit changeType(ProgramBlock::conditionFacingWall);
+}
+void GameWindow::notButtonPushed() {
+  emit changeType(ProgramBlock::conditionNot);
+}
+void GameWindow::moveForwardButtonPushed() {
+  emit changeType(ProgramBlock::moveForward);
+}
+void GameWindow::turnLeftButtonPushed() {
+  emit changeType(ProgramBlock::turnLeft);
+}
+void GameWindow::turnRightButtonPushed() {
+  emit changeType(ProgramBlock::turnRight);
+}
+void GameWindow::facingPitButtonPushed() {
+  emit changeType(ProgramBlock::conditionFacingPit);
+}
+void GameWindow::eatCheeseButtonPushed() {
+  emit changeType(ProgramBlock::eatCheese);
+}
+void GameWindow::endWhileButtonPushed() {
+  emit changeType(ProgramBlock::endWhile);
+}
+void GameWindow::endIfButtonPushed() {
+  emit changeType(ProgramBlock::endIf);
+}
+void GameWindow::whilePushed() { emit changeType(ProgramBlock::whileLoop); }
+void GameWindow::facingBlockButtonPushed() {
+  emit changeType(ProgramBlock::conditionFacingBlock);
+}
+void GameWindow::facingCheeseButtonPushed() {
+  emit changeType(ProgramBlock::conditionFacingCheese);
+}
+
+void GameWindow::connectToggled(bool connecting) {
+  if (connecting) {
+    ui->connectButton->setStyleSheet("background-color: rgb(255, 0, 0);font: "
+                                     "700 9pt \"Microsoft YaHei UI\";");
+    ui->connectButton->setText("Cancel");
+  } else {
+    ui->connectButton->setStyleSheet("font: 700 9pt \"Microsoft YaHei UI\";");
+    ui->connectButton->setText("Connect Blocks");
+  }
+}
+

@@ -4,9 +4,11 @@
 #include <vector>
 #include "constants.h"
 #include <QPoint>
+#include <QObject>
 
-class Simulation
+class Simulation: public QObject
 {
+    Q_OBJECT
 private:
     gameState gameState;
     int width;
@@ -23,7 +25,8 @@ private:
     std::map<int, int> ifWhileToEnd;
     std::map<int, int> endToIfWhile;
 public:
-    Simulation(std::vector<std::vector<MapTile>> newMap, std::vector<ProgramBlock> newProgram);
+    Simulation(std::vector<std::vector<MapTile>> newMap, std::vector<ProgramBlock> newProgram, QObject *parent = 0);
+
     void step();
     void run();
     std::vector<std::vector<MapTile>> map;
@@ -41,7 +44,8 @@ private:
     bool checkInBounds(QPoint);
     bool checkCondition(bool, ProgramBlock);
     QPoint getFacingPoint(int offset = 1);
-
+signals:
+    void runningBlock(int);
 
 };
 
