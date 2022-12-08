@@ -24,7 +24,7 @@ class CelebrationWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit CelebrationWindow(QWidget *parent = nullptr);
+    explicit CelebrationWindow(int nextLevelIndex, QWidget *parent = nullptr);
     ~CelebrationWindow();
 
 public slots:
@@ -36,8 +36,10 @@ private:
     std::array<b2Body* , NUM_CONFETTI> confettiBodies;
     QTimer timer;
     QPainter painter;
+    int nextLevelIndex;
 private slots:
     void showMainMenu();
+    void nextLevel();
 
 signals:
 

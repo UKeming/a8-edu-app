@@ -3,10 +3,7 @@
 
 #include "constants.h"
 #include "gamecanvas.h"
-#include "gamemodel.h"
-#include "levelselectwindow.h"
 #include "machineeditor.h"
-#include "simulation.h"
 
 #include <QMainWindow>
 #include <QTimer>
@@ -20,13 +17,14 @@ class GameWindow : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit GameWindow(std::vector<std::vector<MapTile>> map, int levelNumber, LevelSelectWindow *parent = nullptr);
+    explicit GameWindow(std::vector<std::vector<MapTile>> map, int levelNumber, QMainWindow *parent = nullptr);
     ~GameWindow();
 
 private:
     Ui::GameWindow *ui;
     int gameAreaX;
     int gameAreaY;
+    int levelNumber;
 
     MachineEditor *editor;
     GameCanvas* canvas;
@@ -68,7 +66,7 @@ private slots:
     /**
      * @brief showEducationalMessage Shows an educational message to the user.
      */
-    void showEducationalMessage(QString);
+    void showEducationalMessage();
 
     /**
      * @brief hideRobot hide the robot if lost the game

@@ -106,6 +106,16 @@ void GameCanvas::simulate(std::vector<ProgramBlock> program) {
 void GameCanvas::step() {
     s->step();
     s->printGameState();
+    if(s->getGameState() == lost){
+        emit gameLost();
+        stop();
+        return;
+    }
+    if(s->getGameState() == won){
+        emit gameWon();
+        stop();
+        return;
+    }
     emit showRobot(s->getRobotPos() * brickSize, robotSize);
     direction currentDir = s->getRobotDirection();
     if (preDir != currentDir) {
@@ -129,15 +139,6 @@ void GameCanvas::step() {
         }
     }
     setMap(s->getMap());
-
-    if(s->getGameState() == lost){
-        emit gameLost();
-        stop();
-    }
-    if(s->getGameState() == won){
-        emit gameWon();
-        stop();
-    }
 }
 
 void GameCanvas::run(int interval) { timer->start(interval); }

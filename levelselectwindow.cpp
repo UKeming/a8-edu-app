@@ -2,7 +2,6 @@
 #include "ui_levelselectwindow.h"
 #include "constants.h"
 #include "gamewindow.h"
-#include "gamemodel.h"
 
 LevelSelectWindow::LevelSelectWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -25,10 +24,8 @@ LevelSelectWindow::~LevelSelectWindow()
 
 void LevelSelectWindow::openLevel(const QModelIndex& level) {
     int selectedLevel = level.row();
-//    GameModel model(selectedLevel);
     GameWindow* window = new GameWindow(levels[selectedLevel], selectedLevel, this);
-//    emit selectMap(levels[selectedLevel]);
-//    emit selectLevel(selectedLevel);
+    this->close();
     window->show();
 }
 
