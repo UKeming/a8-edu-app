@@ -26,6 +26,8 @@ MachineGraph::MachineGraph(QWidget *parent) : QWidget{parent} {
     selecting = false;
     mousePressing = false;
     moving = false;
+
+
     update();
 }
 
@@ -410,6 +412,7 @@ bool MachineGraph::event(QEvent *event) {
     return false;
 }
 void MachineGraph::mouseMoveHandler(QMouseEvent *event) {
+    qDebug() << "Hi!!!";
     if (selecting) {
         movingMousePosition = event->position();
         // Update selected boxes.
@@ -417,7 +420,6 @@ void MachineGraph::mouseMoveHandler(QMouseEvent *event) {
 
         std::vector<QPointF> newPositionList;
         for (int blockId : selectedBlock) {
-            //qDebug() << std::get<QPointF>(map[blockId]);
             newPositionList.push_back(std::get<QPointF>(map[blockId]));
         }
 
@@ -427,6 +429,20 @@ void MachineGraph::mouseMoveHandler(QMouseEvent *event) {
         for (int i = 0; i < selectedBlock.size(); i++) {
             QPointF newPosition =
                     event->position() - pressedMousePosition + pressedBlockPosition[i];
+            if(newPosition.x() < 1){
+                newPosition.setX(1);
+            }
+            if(newPosition.y() < 1){
+                newPosition.setY(1);
+            }
+            QPoint size = std::get<QPoint>(map[selectedBlock[i]]);
+            if(newPosition.x() + size.x()> 760){
+                newPosition.setX(760 - size.x());
+            }
+            if(newPosition.y() + size.y()> 721){
+                newPosition.setY(721 - size.y());
+            }
+
             std::get<QPointF>(map[selectedBlock[i]]) = newPosition;
         }
     }

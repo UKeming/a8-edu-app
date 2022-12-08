@@ -10,6 +10,7 @@ GameCanvas::GameCanvas(QWidget *parent, std::vector<std::vector<MapTile>> map)
     this->setMinimumSize(QSize(1000, 2000));
 
     brickSize = 100;
+    interval = 1000;
     robotSize = 90;
     preDir = east;
 
@@ -101,12 +102,12 @@ void GameCanvas::simulate(std::vector<ProgramBlock> program) {
     s = new Simulation(map, program);
     connect(s, &Simulation::runningBlock, this, &GameCanvas::emitRunningBlock);
     emit restartGame();
-    run(1000);
+    run(interval);
 }
 
 void GameCanvas::step() {
     s->step();
-    s->printGameState();
+    //s->printGameState();
     if(s->getGameState() == lost){
         emit robotMovie(rightWaiting);
         emit gameLost();
@@ -143,8 +144,13 @@ void GameCanvas::step() {
     setMap(s->getMap());
 }
 
-void GameCanvas::run(int interval) { timer->start(interval); }
-
+void GameCanvas::run(int newInterval) { timer->start(newInterval); }
+void GameCanvas::setInterval(int newInterval){
+    interval = newInterval;
+    if(timer->isActive()){
+        timer->setInterval(interval);
+    }
+}
 void GameCanvas::stop() { timer->stop(); }
 void GameCanvas::emitRunningBlock(int block){
     emit currentBlock(block);

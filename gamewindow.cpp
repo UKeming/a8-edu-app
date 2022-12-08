@@ -9,6 +9,7 @@
 #include <QColor>
 #include <QMessageBox>
 #include <QTimer>
+#include <QSlider>
 
 GameWindow::GameWindow(std::vector<std::vector<MapTile>> map, int levelNumber, QMainWindow *parent) :
     QMainWindow(parent),
@@ -28,7 +29,7 @@ GameWindow::GameWindow(std::vector<std::vector<MapTile>> map, int levelNumber, Q
     connect(canvas, &GameCanvas::gameWon, this, &GameWindow::gameWon);
     // show the level number and welcome to the user
     QString num = QString::number(levelNumber + 1);
-    QString welcome = "Welcome to";
+    QString welcome = "Welcome!";
     QString levelNum = "Level " + num + "!";
     QFont font1("woshishabi", 32, QFont::Bold);
     QFont font2("woshishabi", 48, QFont::Bold);
@@ -103,6 +104,7 @@ GameWindow::GameWindow(std::vector<std::vector<MapTile>> map, int levelNumber, Q
     connect(this, &GameWindow::changeType, graph, &MachineGraph::setType);
     connect(canvas, &GameCanvas::currentBlock, graph, &MachineGraph::setRunningBlock);
 
+    connect(ui->speedSlider, &QSlider::valueChanged, canvas, &GameCanvas::setInterval);
 
 
     emit viewReady();
@@ -173,14 +175,14 @@ void GameWindow::showProgram() {
 }
 
 void GameWindow::lost(){
-    QString lost = "You lost in";
+    QString lost = "You lost, try again!";
     ui->welcomeLabel->setText(lost);
     QPoint respawn = QPoint(0,0);
     showIdleRobot(respawn, 90);
 }
 
 void GameWindow::restart(){
-    QString restart = "Welcome to";
+    QString restart = "Welcome!";
     ui->welcomeLabel->setText(restart);
 }
 
