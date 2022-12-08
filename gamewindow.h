@@ -83,9 +83,25 @@ private slots:
      */
     void gameWon();
 
+    void ifButtonPushed();
+    void notButtonPushed();
+    void facingWallButtonPushed();
+    void moveForwardButtonPushed();
+    void turnLeftButtonPushed();
+    void turnRightButtonPushed();
+    void facingPitButtonPushed();
+    void eatCheeseButtonPushed();
+    void endWhileButtonPushed();
+    void endIfButtonPushed();
+    void whilePushed();
+    void facingBlockButtonPushed();
+    void facingCheeseButtonPushed();
+    void connectToggled(bool connecting);
+
 
 signals:
     void viewReady();
+    void changeType(ProgramBlock p);
 };
 
 #endif // GAMEWINDOW_H

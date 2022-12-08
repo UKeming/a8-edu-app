@@ -25,8 +25,12 @@ private:
 
   const QColor errorBlockColor = QColor::fromRgb(233, 79, 55);
 
+  const QColor runningBlockColor = QColor::fromRgb(255, 255, 255);
+
+
   std::map<int, std::tuple<ProgramBlock, QPointF, QPoint>> map;
   std::map<int, std::tuple<ProgramBlock, ProgramBlock>> condition;
+  std::map<int, int> outputMap;
 
   std::vector<int> blockTree;
 
@@ -42,6 +46,7 @@ private:
   int hoverBlock;
   std::vector<int> selectedBlock;
   std::vector<QPointF> pressedBlockPosition;
+
   ProgramBlock type;
 
   int currentRunningBlock, errorBlock;
@@ -70,6 +75,7 @@ private:
   void mouseReleaseHandler(QMouseEvent *event);
   void mouseMoveHandler(QMouseEvent *event);
   void keyPressHandler(QKeyEvent *event);
+  void keyReleaseHandler(QKeyEvent *event);
 
   const std::string getText(ProgramBlock p);
 
@@ -78,6 +84,7 @@ public slots:
   void setType(ProgramBlock type);
   std::vector<ProgramBlock> getProgram();
   void resetBegin();
+  void setRunningBlock(int blockID);
 
 signals:
   void connectToggled(bool connecting);

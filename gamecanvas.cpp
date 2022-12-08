@@ -99,6 +99,7 @@ void GameCanvas::setMap(std::vector<std::vector<MapTile>> map) {
 void GameCanvas::simulate(std::vector<ProgramBlock> program) {
     stop();
     s = new Simulation(map, program);
+    connect(s, &Simulation::runningBlock, this, &GameCanvas::emitRunningBlock);
     emit restartGame();
     run(1000);
 }
@@ -144,3 +145,6 @@ void GameCanvas::step() {
 void GameCanvas::run(int interval) { timer->start(interval); }
 
 void GameCanvas::stop() { timer->stop(); }
+void GameCanvas::emitRunningBlock(int block){
+    emit currentBlock(block);
+}
