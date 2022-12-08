@@ -417,6 +417,7 @@ void MachineGraph::mouseMoveHandler(QMouseEvent *event) {
 
         std::vector<QPointF> newPositionList;
         for (int blockId : selectedBlock) {
+            //qDebug() << std::get<QPointF>(map[blockId]);
             newPositionList.push_back(std::get<QPointF>(map[blockId]));
         }
 
