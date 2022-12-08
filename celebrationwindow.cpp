@@ -100,8 +100,8 @@ void CelebrationWindow::showMainMenu() {
 
 void CelebrationWindow::nextLevel() {
     GameWindow* window = new GameWindow(levels[nextLevelIndex], nextLevelIndex, this);
-    window->show();
     this->close();
+    window->show();
 }
 
 const float32 timeStep = 1.0f / 60.0f;

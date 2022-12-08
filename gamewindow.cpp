@@ -54,7 +54,7 @@ GameWindow::GameWindow(std::vector<std::vector<MapTile>> map, int levelNumber, Q
 //    connect(&model, &GameModel::showEducationalMessage, this, &GameWindow::showEducationalMessage);
 //    connect(&model, &GameModel::mapLoaded, this, &GameWindow::changeMap);
 
-    QTimer::singleShot(2000, this, &GameWindow::showEducationalMessage);
+    QTimer::singleShot(200, this, &GameWindow::showEducationalMessage);
 
 
     // Connects program pannel.
@@ -186,9 +186,8 @@ void GameWindow::restart(){
 
 void GameWindow::gameWon(){
     auto celebrationWindow = new CelebrationWindow(levelNumber + 1);
+    this->close();
     celebrationWindow->show();
-    this->hide();
-//    this->close();
 }
 
 void GameWindow::ifButtonPushed() {
