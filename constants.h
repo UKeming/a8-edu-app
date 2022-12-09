@@ -1,14 +1,3 @@
-/**
- * @file constants.h
- * @author Joshua Beatty, Zhuowen Song, Keming Chen, Matthew Whitaker
- * @brief Header file that contains essential game data
- * @version 1.0
- * @date 2022-12-08
- *
- * @copyright Copyright (c) 2022
- *
- */
-
 #ifndef CONSTANTS_H
 #define CONSTANTS_H
 
@@ -57,7 +46,7 @@ enum direction {
     west = 3
 };
 
-/// Defines the levels for the game
+// TODO We'll remove this and add levels to the model? Just adding it so we have some sample data to play with.
 const std::vector<std::vector<MapTile>> levels[] = {
     // Level 1
     std::vector<std::vector<MapTile>>{
@@ -142,16 +131,16 @@ const std::vector<std::vector<MapTile>> levels[] = {
 
     // Level 10
     std::vector<std::vector<MapTile>>{
-        std::vector<MapTile>{start, ground,  wall, wall, wall},
-        std::vector<MapTile>{wall,  ground,  ground, wall, wall },
-        std::vector<MapTile>{wall,  wall,  ground,   ground,   wall },
-        std::vector<MapTile>{wall,  wall,  wall, ground, ground  },
-        std::vector<MapTile>{wall,  wall,  wall,   wall,   cheese    }
+        std::vector<MapTile>{start, ground,  ground, ground, ground, wall,   wall,   wall,   wall,   wall},
+        std::vector<MapTile>{wall,  wall,    wall,   wall,   block,  wall,   ground, ground, ground, wall },
+        std::vector<MapTile>{wall,  ground,  ground, ground, ground, wall,   ground, wall,   ground, wall },
+        std::vector<MapTile>{wall,  ground,  wall,   wall,   ground, wall,   ground, wall,   ground, wall },
+        std::vector<MapTile>{wall,  ground,  ground, ground, ground, ground, block, ground, ground, wall },
+        std::vector<MapTile>{wall,  wall,    wall,   wall,   wall,   wall,   wall,   wall,   cheese, wall }
     }
 
 };
 
-/// These messages are shown at the beginning of each level, to help the user learn and encourage them!
 const auto educationalMessages = std::vector<QString>{
         //Level 1
         "Welcome!\n\nThe mice need your help.\nThey've built and designed a new robot to make cheese collection quick and efficient. But, without programming, the robot can't do anything!\n\nWill you write a program to help the robot reach the cheese? Just moving forward a few times should be a good way to start.",
@@ -182,7 +171,7 @@ const auto educationalMessages = std::vector<QString>{
         "You're getting the hang of this! Great job! See how few blocks you can use to help the robot reach the cheese!",
 
         //Level 10
-        "You'll definitely want loops on this one! Keep up the great work!",
+        "",
 };
 
 #endif // CONSTANTS_H

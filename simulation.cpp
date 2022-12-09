@@ -1,13 +1,3 @@
-/**
- * @file simulation.h
- * @author Joshua Beatty, Keming Chen
- * @brief The tiny simulation program.
- * @version 0.1
- * @date 2022-12-8
- *
- * @copyright Copyright (c) 2022
- *
- */
 #include "simulation.h"
 #include "constants.h"
 #include <QDebug>
@@ -17,8 +7,8 @@
 #include <vector>
 Simulation::Simulation(std::vector<std::vector<MapTile>> newMap,
                        std::vector<ProgramBlock> newProgram, QObject *parent)
-    : QObject(parent), gameState(notEnded), robotDirection(east),
-      program(newProgram), map(newMap) {
+    : QObject(parent), map(newMap), gameState(notEnded), robotDirection(east),
+      program(newProgram) {
     height = map.size();
     width = map[0].size();
     for (unsigned long long y = 0; y < map.size(); y++) {
@@ -173,7 +163,7 @@ void Simulation::step() {
         }
     } break;
     case endWhile:
-        currentBlock = ifWhileToEnd[currentBlock];
+        currentBlock = ifWhileToEnd[currentBlock] + 1;
         break;
     case endIf:
         break;
@@ -219,7 +209,7 @@ bool Simulation::checkInBounds(QPoint point) {
 
 bool Simulation::checkCondition(bool isNot, ProgramBlock condition) {
     QPoint facing = getFacingPoint(1);
-    if (!checkInBounds(QPoint(facing.x(), facing.y())))
+    if(!checkInBounds(QPoint(facing.x(), facing.y())))
         return false;
     MapTile facingTile = map[facing.y()][facing.x()];
     bool flag = false;
@@ -302,13 +292,18 @@ void Simulation::printGameState() {
     }
 }
 
-std::vector<std::vector<MapTile>> Simulation::getMap() {
-    QPoint pos = this->getCheesePos();
+std::vector<std::vector<MapTile>> Simulation::getMap(){
+    QPoint pos= this->getCheesePos();
     std::vector<std::vector<MapTile>> newMap = map;
     newMap[pos.y()][pos.x()] = MapTile::cheese;
     return newMap;
 }
 
-direction Simulation::getRobotDirection() { return robotDirection; }
+direction Simulation::getRobotDirection(){
+    return robotDirection;
+}
 
-enum gameState Simulation::getGameState() { return gameState; }
+enum gameState Simulation::getGameState(){
+    return gameState;
+}
+
