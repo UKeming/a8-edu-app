@@ -412,7 +412,6 @@ bool MachineGraph::event(QEvent *event) {
     return false;
 }
 void MachineGraph::mouseMoveHandler(QMouseEvent *event) {
-    qDebug() << "Hi!!!";
     if (selecting) {
         movingMousePosition = event->position();
         // Update selected boxes.
@@ -732,7 +731,7 @@ std::vector<ProgramBlock> MachineGraph::getProgram() {
         setErrorMessage(blockId.back(), "Needs end statement");
         return std::vector<ProgramBlock>(ProgramBlock::blank);
     }
-    qDebug() << program;
+
     emit programData(program);
 
     return program;

@@ -38,7 +38,6 @@ Simulation::Simulation(std::vector<std::vector<MapTile>> newMap,
         case endWhile: {
             int start = ifWhileStack.top();
             ifWhileStack.pop();
-            qDebug() << start << "," << index;
             ifWhileToEnd.insert({start, index});
             endToIfWhile.insert({index, start});
             break;
@@ -59,8 +58,6 @@ void Simulation::step() {
         setLost();
         return;
     }
-    qDebug() << currentBlock;
-    qDebug() << program[currentBlock];
 
     switch (program[currentBlock]) {
     case beginBlock:
@@ -79,7 +76,6 @@ void Simulation::step() {
 
         switch (map[newPos.y()][newPos.x()]) {
         case ground:
-            qDebug() << "moving";
             robotPos = newPos;
             break;
         case pit:
@@ -177,7 +173,6 @@ void Simulation::step() {
     case conditionFacingPit:
     case conditionFacingCheese:
     case blank:
-        qDebug() << "Ooops should not be here!!!!!!!!";
         break;
     }
 }
@@ -243,13 +238,10 @@ int Simulation::getCurrentBlock() { return currentBlock; }
 void Simulation::printGameState() {
     switch (gameState) {
     case lost:
-        qDebug() << "Gamestate: lost";
         break;
     case won:
-        qDebug() << "Gamestate: won";
         break;
     case notEnded:
-        qDebug() << "Gamestate: notEnded";
         break;
     }
     std::string mapString = "";
@@ -294,12 +286,10 @@ void Simulation::printGameState() {
                 mapString.append("#");
                 break;
             default:
-                qDebug() << "Ooops should not be here #2!!!!!!!!";
                 break;
             }
         }
     }
-    qDebug() << mapString.c_str();
 }
 
 std::vector<std::vector<MapTile>> Simulation::getMap(){
