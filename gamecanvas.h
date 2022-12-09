@@ -27,6 +27,7 @@ private:
     int robotX;
     int robotY;
     int robotSize;
+    int interval;
     direction preDir;
 
     // robot movies
@@ -51,6 +52,7 @@ public slots:
     void simulate(std::vector<ProgramBlock> program);
     void step();
     void run(int interval);
+    void setInterval(int interval);
     void stop();
     void emitRunningBlock(int block);
 

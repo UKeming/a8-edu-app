@@ -44,7 +44,8 @@ MachineEditor::MachineEditor(QWidget *parent)
 
   connect(ui->getOutput, &QPushButton::clicked, graph,
           &MachineGraph::getProgram);
-
+  ui->connectButton->setVisible(false);
+  ui->resetBegin->setVisible(false);
   // Get program from the graph and send it to the game window
   connect(graph, &MachineGraph::programData, this, &MachineEditor::emitProgram);
   connect(this, &MachineEditor::changeType, graph, &MachineGraph::setType);

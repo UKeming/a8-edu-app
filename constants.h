@@ -59,6 +59,7 @@ const std::vector<std::vector<MapTile>> levels[] = {
         std::vector<MapTile>{wall,  ground,  ground,  ground },
         std::vector<MapTile>{wall,  wall,  wall,  wall }
     },
+
     // Level 3
     std::vector<std::vector<MapTile>>{
         std::vector<MapTile>{start, ground, block,  ground,  ground},
@@ -114,7 +115,7 @@ const std::vector<std::vector<MapTile>> levels[] = {
     std::vector<std::vector<MapTile>>{
         std::vector<MapTile>{wall, wall,  cheese, wall, pit, wall,   wall},
         std::vector<MapTile>{wall, ground,  block, block, block, ground,   wall},
-        std::vector<MapTile>{cheese, ground,  ground, ground, ground, pit,   wall},
+        std::vector<MapTile>{start, ground,  ground, ground, ground, pit,   wall},
         std::vector<MapTile>{wall, wall,  wall, wall, wall, wall,   wall}
     },
 
@@ -126,7 +127,18 @@ const std::vector<std::vector<MapTile>> levels[] = {
         std::vector<MapTile>{wall,  ground,  wall,   wall,   ground, wall,   ground, wall,   ground, wall },
         std::vector<MapTile>{wall,  ground,  ground, ground, ground, ground, block, ground, ground, wall },
         std::vector<MapTile>{wall,  wall,    wall,   wall,   wall,   wall,   wall,   wall,   cheese, wall }
+    },
+
+    // Level 10
+    std::vector<std::vector<MapTile>>{
+        std::vector<MapTile>{start, ground,  ground, ground, ground, wall,   wall,   wall,   wall,   wall},
+        std::vector<MapTile>{wall,  wall,    wall,   wall,   block,  wall,   ground, ground, ground, wall },
+        std::vector<MapTile>{wall,  ground,  ground, ground, ground, wall,   ground, wall,   ground, wall },
+        std::vector<MapTile>{wall,  ground,  wall,   wall,   ground, wall,   ground, wall,   ground, wall },
+        std::vector<MapTile>{wall,  ground,  ground, ground, ground, ground, block, ground, ground, wall },
+        std::vector<MapTile>{wall,  wall,    wall,   wall,   wall,   wall,   wall,   wall,   cheese, wall }
     }
+
 };
 
 const auto educationalMessages = std::vector<QString>{
@@ -135,6 +147,7 @@ const auto educationalMessages = std::vector<QString>{
 
         //Level 2
         "The robot's small size allows it to go around corners and reach areas the mice can't reach on their own.\n\nCan you write a program to help the robot reach the cheese without bumping into any walls?",
+
 
         //Level 3
         "The robot is even strong enough to move obstacles to access new cheese! Help move the crate and get to the cheese",
@@ -156,6 +169,9 @@ const auto educationalMessages = std::vector<QString>{
 
         //Level 9
         "You're getting the hang of this! Great job! See how few blocks you can use to help the robot reach the cheese!",
+
+        //Level 10
+        "",
 };
 
 #endif // CONSTANTS_H

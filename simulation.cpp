@@ -167,7 +167,7 @@ void Simulation::step() {
         }
     } break;
     case endWhile:
-        currentBlock = ifWhileToEnd[currentBlock];
+        currentBlock = ifWhileToEnd[currentBlock] + 1;
         break;
     case endIf:
         break;
@@ -214,6 +214,8 @@ bool Simulation::checkInBounds(QPoint point) {
 
 bool Simulation::checkCondition(bool isNot, ProgramBlock condition) {
     QPoint facing = getFacingPoint(1);
+    if(!checkInBounds(QPoint(facing.x(), facing.y())))
+        return false;
     MapTile facingTile = map[facing.y()][facing.x()];
     bool flag = false;
     switch (condition) {
