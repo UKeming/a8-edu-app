@@ -34,7 +34,6 @@ GameWindow::GameWindow(std::vector<std::vector<MapTile>> map, int levelNumber,
     connect(canvas, &GameCanvas::robotMovie, this, &GameWindow::showRobotMovie);
     connect(canvas, &GameCanvas::showRobot, this, &GameWindow::showIdleRobot);
     connect(canvas, &GameCanvas::showCheese, this, &GameWindow::showCheese);
-    connect(canvas, &GameCanvas::gameLost, this, &GameWindow::lost);
     connect(canvas, &GameCanvas::restartGame, this, &GameWindow::restart);
     connect(canvas, &GameCanvas::gameWon, this, &GameWindow::gameWon);
     // show the level number and welcome to the user
