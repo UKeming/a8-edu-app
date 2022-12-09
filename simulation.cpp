@@ -173,7 +173,7 @@ void Simulation::step() {
         }
     } break;
     case endWhile:
-        currentBlock = ifWhileToEnd[currentBlock] + 1;
+        currentBlock = ifWhileToEnd[currentBlock];
         break;
     case endIf:
         break;
