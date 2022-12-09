@@ -45,8 +45,6 @@ GameWindow::GameWindow(std::vector<std::vector<MapTile>> map, int levelNumber, Q
     // do not show the robot
     ui->robotLabel->setVisible(false);
 
-    editor= new MachineEditor();
-
     // Get the game play area coordinate, for robot display
     gameAreaX = ui->gameArea->x();
     gameAreaY = ui->gameArea->y();
@@ -169,10 +167,6 @@ void GameWindow::showEducationalMessage() {
     QMessageBox::information(this, "About This Level", educationalMessages[levelNumber]);
 }
 
-
-void GameWindow::showProgram() {
-    editor->show();
-}
 
 void GameWindow::lost(){
     QString lost = "You lost, try again!";

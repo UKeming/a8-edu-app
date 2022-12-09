@@ -57,9 +57,7 @@ SOURCES += \
     Box2D/Rope/b2Rope.cpp \
     celebrationwindow.cpp \
     gamecanvas.cpp \
-    gamemodel.cpp \
     gamewindow.cpp \
-    machineeditor.cpp \
     machinegraph.cpp \
     main.cpp \
     levelselectwindow.cpp \
@@ -116,10 +114,8 @@ HEADERS += \
     celebrationwindow.h \
     constants.h \
     gamecanvas.h \
-    gamemodel.h \
     gamewindow.h \
     levelselectwindow.h \
-    machineeditor.h \
     machinegraph.h \
     simulation.h
     simulation.h
@@ -127,8 +123,7 @@ HEADERS += \
 FORMS += \
     celebrationwindow.ui \
     gamewindow.ui \
-    levelselectwindow.ui \
-    machineeditor.ui
+    levelselectwindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

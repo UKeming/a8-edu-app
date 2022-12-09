@@ -3,7 +3,6 @@
 
 #include "constants.h"
 #include "gamecanvas.h"
-#include "machineeditor.h"
 
 #include <QMainWindow>
 #include <QTimer>
@@ -26,7 +25,6 @@ private:
     int gameAreaY;
     int levelNumber;
 
-    MachineEditor *editor;
     GameCanvas* canvas;
 
 
@@ -55,8 +53,6 @@ private slots:
      * @brief showCheese Show the cheese
      */
     void showCheese(QPoint, int size);
-
-    void showProgram();
 
     /**
      * @brief showRobotMovie change the robot movie
