@@ -1,10 +1,9 @@
 /**
- * @file mainwindow.h
- * @author Joshua Beatty, Zhuowen Song, Keming Chen, Matthew Whitaker
- * @brief Header file for mainwindow.cpp.
+ * @file GameCanvas.h
+ * @author Zhuowen Song, Keming Chen
+ * @brief Header file for GameCanvas.cpp.
  * @version 0.1
- * @date 2022-11-15
- * @reviewer Joshua Beatty
+ * @date 2022-12-8
  *
  * @copyright Copyright (c) 2022
  *
