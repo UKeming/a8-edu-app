@@ -38,20 +38,18 @@ MachineGraph::MachineGraph(QWidget *parent) : QWidget{parent} {
     mousePressing = false;
     moving = false;
 
-
     update();
 }
 
-void MachineGraph::paintEvent(QPaintEvent *event) {
+void MachineGraph::paintEvent(QPaintEvent *) {
     QPainter painter(this);
-
     // Draw backgournd.
     painter.drawRect(QRect(0, 0, this->width() - 10, this->height() - 10));
 
     for (const auto &[key, value] : map) {
         bool visited[blockTree.size()];
 
-        for (auto i = 0; i < blockTree.size(); i++) {
+        for (unsigned long i = 0; i < blockTree.size(); i++) {
             visited[i] = false;
         }
 
@@ -439,17 +437,17 @@ void MachineGraph::mouseMoveHandler(QMouseEvent *event) {
         for (unsigned long i = 0; i < selectedBlock.size(); i++) {
             QPointF newPosition =
                     event->position() - pressedMousePosition + pressedBlockPosition[i];
-            if(newPosition.x() < 1){
+            if (newPosition.x() < 1) {
                 newPosition.setX(1);
             }
-            if(newPosition.y() < 1){
+            if (newPosition.y() < 1) {
                 newPosition.setY(1);
             }
             QPoint size = std::get<QPoint>(map[selectedBlock[i]]);
-            if(newPosition.x() + size.x()> 760){
+            if (newPosition.x() + size.x() > 760) {
                 newPosition.setX(760 - size.x());
             }
-            if(newPosition.y() + size.y()> 721){
+            if (newPosition.y() + size.y() > 721) {
                 newPosition.setY(721 - size.y());
             }
 
@@ -483,7 +481,6 @@ void MachineGraph::mouseReleaseHandler(QMouseEvent *event) {
     for (unsigned long i = 0; i < selectedBlock.size(); i++) {
         pressedBlockPosition[i] = std::get<QPointF>(map[selectedBlock[i]]);
     }
-
 
     hoverBlock = -1;
     mousePressing = false;
@@ -547,7 +544,6 @@ void MachineGraph::keyReleaseHandler(QKeyEvent *event) {
     }
 }
 
-
 const std::string MachineGraph::getText(ProgramBlock p) {
     switch (p) {
     case ProgramBlock::conditionFacingBlock:
@@ -581,6 +577,7 @@ const std::string MachineGraph::getText(ProgramBlock p) {
     case ProgramBlock::moveForward:
         return "Move Forward";
     }
+    return "";
 }
 
 bool MachineGraph::reachable(int id1, int id2) {
@@ -669,7 +666,7 @@ void MachineGraph::removeBlocks() {
         for (int id : selectedBlock) {
             if (id == 0)
                 continue;
-            for (int i = 0; i < blockTree.size(); i++) {
+            for (unsigned long i = 0; i < blockTree.size(); i++) {
                 if (blockTree[i] == id) {
                     blockTree[i] = -1;
                 }

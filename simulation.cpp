@@ -17,8 +17,8 @@
 #include <vector>
 Simulation::Simulation(std::vector<std::vector<MapTile>> newMap,
                        std::vector<ProgramBlock> newProgram, QObject *parent)
-    : QObject(parent), map(newMap), gameState(notEnded), robotDirection(east),
-      program(newProgram) {
+    : QObject(parent), gameState(notEnded), robotDirection(east),
+      program(newProgram), map(newMap) {
     height = map.size();
     width = map[0].size();
     for (unsigned long long y = 0; y < map.size(); y++) {
@@ -219,7 +219,7 @@ bool Simulation::checkInBounds(QPoint point) {
 
 bool Simulation::checkCondition(bool isNot, ProgramBlock condition) {
     QPoint facing = getFacingPoint(1);
-    if(!checkInBounds(QPoint(facing.x(), facing.y())))
+    if (!checkInBounds(QPoint(facing.x(), facing.y())))
         return false;
     MapTile facingTile = map[facing.y()][facing.x()];
     bool flag = false;
@@ -302,18 +302,13 @@ void Simulation::printGameState() {
     }
 }
 
-std::vector<std::vector<MapTile>> Simulation::getMap(){
-    QPoint pos= this->getCheesePos();
+std::vector<std::vector<MapTile>> Simulation::getMap() {
+    QPoint pos = this->getCheesePos();
     std::vector<std::vector<MapTile>> newMap = map;
     newMap[pos.y()][pos.x()] = MapTile::cheese;
     return newMap;
 }
 
-direction Simulation::getRobotDirection(){
-    return robotDirection;
-}
+direction Simulation::getRobotDirection() { return robotDirection; }
 
-enum gameState Simulation::getGameState(){
-    return gameState;
-}
-
+enum gameState Simulation::getGameState() { return gameState; }
