@@ -469,7 +469,7 @@ void MachineGraph::mouseReleaseHandler(QMouseEvent *event) {
         clearSelected();
     }
 
-    for (int i = 0; i < selectedBlock.size(); i++) {
+    for (unsigned long i = 0; i < selectedBlock.size(); i++) {
         pressedBlockPosition[i] = std::get<QPointF>(map[selectedBlock[i]]);
     }
 

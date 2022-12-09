@@ -1,3 +1,14 @@
+/**
+ * @file celebrationwindow.h
+ * @author Matthew Whitaker
+ * @brief Header file for celebrationwindow.cpp
+ * @version 1.0
+ * @date 2022-12-08
+ *
+ * @copyright Copyright (c) 2022
+ *
+ */
+
 #ifndef CELEBRATIONWINDOW_H
 #define CELEBRATIONWINDOW_H
 
@@ -28,6 +39,7 @@ public:
     ~CelebrationWindow();
 
 public slots:
+    // Called when the physics engine should progress to the next state.
     void updatePhysics();
 
 private:
@@ -38,25 +50,31 @@ private:
     QPainter painter;
     int nextLevelIndex;
 private slots:
+    // Closes this window and shows the main menu window
     void showMainMenu();
+
+    // Closes this window and opens up a new game window with the next level!
     void nextLevel();
 
 signals:
 
 };
 
+/// A widget with a custom canvas for drawing some celebratory confetti!
 class CelebrationWidget : public QWidget {
     Q_OBJECT
 
 public:
     explicit CelebrationWidget(QWidget *parent = nullptr);
 
+    // Passes in the physics bodies so that the canvas can draw them on the screen
     void setBodies(std::array<b2Body*, NUM_CONFETTI>* bodiesReference);
 
 private:
     std::array<b2Body*, NUM_CONFETTI>* confettiBodiesReference;
     std::array<QColor, NUM_CONFETTI> confettiColors;
 
+    // Called when the Canvas needs to repaint
     void paintEvent(QPaintEvent *);
 };
 
