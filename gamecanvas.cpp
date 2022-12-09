@@ -1,3 +1,15 @@
+/**
+ * @file mainwindow.h
+ * @author Joshua Beatty, Zhuowen Song, Keming Chen, Matthew Whitaker
+ * @brief Header file for mainwindow.cpp.
+ * @version 0.1
+ * @date 2022-11-15
+ * @reviewer Joshua Beatty
+ *
+ * @copyright Copyright (c) 2022
+ *
+ */
+
 #include "gamecanvas.h"
 #include "constants.h"
 #include "qtimer.h"
@@ -8,6 +20,8 @@
 GameCanvas::GameCanvas(QWidget *parent, std::vector<std::vector<MapTile>> map)
     : QWidget{parent}, map(map) {
     this->setMinimumSize(QSize(1000, 2000));
+
+    resetMap = map;
 
     brickSize = 100;
     interval = 1000;
@@ -110,7 +124,7 @@ void GameCanvas::step() {
     //s->printGameState();
     if(s->getGameState() == lost){
         emit robotMovie(rightWaiting);
-        emit gameLost();
+        setMap(resetMap);
         stop();
         return;
     }

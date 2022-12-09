@@ -1,3 +1,14 @@
+/**
+ * @file celebrationwindow.cpp
+ * @author Matthew Whitaker
+ * @brief Defines a celebration window complete with Box2D confetti!
+ * @version 1.0
+ * @date 2022-12-08
+ *
+ * @copyright Copyright (c) 2022
+ *
+ */
+
 #include "celebrationwindow.h"
 #include "gamewindow.h"
 #include "ui_celebrationwindow.h"
