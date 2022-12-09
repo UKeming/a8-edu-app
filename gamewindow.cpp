@@ -1,3 +1,14 @@
+/**
+ * @file gamewindow.cpp
+ * @author Joshua Beatty, Zhuowen Song, Keming Chen, Matthew Whitaker
+ * @brief The main game window.
+ * @version 0.1
+ * @date 2022-12-8
+ *
+ * @copyright Copyright (c) 2022
+ *
+ */
+
 #include "gamewindow.h"
 #include "celebrationwindow.h"
 #include "ui_gamewindow.h"

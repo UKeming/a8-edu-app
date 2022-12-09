@@ -1,3 +1,13 @@
+/**
+ * @file simulation.h
+ * @author Joshua Beatty, Keming Chen
+ * @brief The tiny simulation program.
+ * @version 0.1
+ * @date 2022-12-8
+ *
+ * @copyright Copyright (c) 2022
+ *
+ */
 #include "simulation.h"
 #include "constants.h"
 #include <QDebug>

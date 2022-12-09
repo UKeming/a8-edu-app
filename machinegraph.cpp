@@ -1,3 +1,14 @@
+/**
+ * @file machinegraph.cpp
+ * @author Keming Chen, Joshua Beatty
+ * @brief The program editor panel.
+ * @version 0.1
+ * @date 2022-12-8
+ *
+ * @copyright Copyright (c) 2022
+ *
+ */
+
 #include "machinegraph.h"
 #include <QEvent>
 #include <QKeyEvent>
@@ -425,7 +436,7 @@ void MachineGraph::mouseMoveHandler(QMouseEvent *event) {
         pressedBlockPosition = newPositionList;
     }
     if (moving && selectedBlock.size() > 0) {
-        for (int i = 0; i < selectedBlock.size(); i++) {
+        for (unsigned long i = 0; i < selectedBlock.size(); i++) {
             QPointF newPosition =
                     event->position() - pressedMousePosition + pressedBlockPosition[i];
             if(newPosition.x() < 1){
@@ -735,13 +746,6 @@ std::vector<ProgramBlock> MachineGraph::getProgram() {
     emit programData(program);
 
     return program;
-}
-
-void MachineGraph::resetBegin() {
-    std::get<QPointF>(map[0]) =
-            QPointF(this->width() / 2 - GENERAL_BLOCK_SIZE_X / 2,
-                    this->height() / 2 - GENERAL_BLOCK_SIZE_Y / 2);
-    clearSelected();
 }
 
 void MachineGraph::setRunningBlock(int blockID) {

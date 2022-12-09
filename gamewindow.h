@@ -1,3 +1,14 @@
+/**
+ * @file gamewindow.h
+ * @author Joshua Beatty, Zhuowen Song, Keming Chen, Matthew Whitaker
+ * @brief Header file for gamewindow.cpp.
+ * @version 0.1
+ * @date 2022-12-8
+ *
+ * @copyright Copyright (c) 2022
+ *
+ */
+
 #ifndef GAMEWINDOW_H
 #define GAMEWINDOW_H
 
@@ -79,6 +90,9 @@ private slots:
      */
     void gameWon();
 
+    /**
+     * @brief Those are events for buttons for switching the block to be placed
+     */
     void ifButtonPushed();
     void notButtonPushed();
     void facingWallButtonPushed();
@@ -92,11 +106,24 @@ private slots:
     void whilePushed();
     void facingBlockButtonPushed();
     void facingCheeseButtonPushed();
+
+    /**
+     * @brief connectToggled Toggle the connection mode.
+     * @param connecting
+     */
     void connectToggled(bool connecting);
 
 
 signals:
+    /**
+     * @brief viewReady Signals for ready to display the view.
+     */
     void viewReady();
+
+    /**
+     * @brief changeType Change the current placing block type.
+     * @param p
+     */
     void changeType(ProgramBlock p);
 };
 
